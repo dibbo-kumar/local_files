@@ -1,0 +1,42 @@
+a="dibbo kumar"
+a.index(b)-----2
+a= a.replace('b','d')
+
+
+
+
+list:
+list.append()
+list.sort()
+list.sort(reverse = True)
+list.reverse()
+list.insert(ind,element)
+list.remove(element)
+list.pop(index)
+list.copy()
+list3 = copy.deepcopy(list1)
+
+
+
+tuples :
+tup.index(element)
+tup.count(element)
+
+
+
+dictionary:
+print(course['name'])
+print(course.get('name'))
+dict.keys()
+dict.values()
+dict.items()
+
+
+
+
+numpy:
+
+arr = np.ones((3,3),dtype='int64')
+arr = np.arange(1,40,2,dtype= 'int64')
+arr2 = np.linspace(0,1,50)
+arr = np.random.rand(2,2)

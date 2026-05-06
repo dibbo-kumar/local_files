@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Founder Dashboard - IdeaNest</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <style>
+      .dashboard-container {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: 100vh;
+        background-color: var(--light-gray);
+      }
+
+      .sidebar {
+        background-color: var(--white);
+        border-right: 1px solid var(--border-color);
+        padding: 1.5rem 0;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
+        overflow-y: auto;
+      }
+
+      .sidebar-header {
+        padding: 0 1.5rem 2rem;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 1rem;
+      }
+
+      .sidebar-brand {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+      }
+
+      .sidebar-menu {
+        list-style: none;
+      }
+
+      .sidebar-item {
+        margin: 0;
+      }
+
+      .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.5rem;
+        color: var(--text-dark);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .sidebar-link:hover {
+        background-color: var(--light-gray);
+        color: var(--primary-blue);
+        padding-left: 2rem;
+      }
+
+      .sidebar-link.active {
+        background-color: #eff6ff;
+        color: var(--primary-blue);
+        border-left: 3px solid var(--primary-blue);
+        padding-left: 1.5rem;
+      }
+
+      .main-content {
+        margin-left: 250px;
+        padding: 2rem;
+      }
+
+      .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      .dashboard-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+
+      .role-switcher {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background-color: white;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--border-color);
+      }
+
+      .role-badge {
+        background-color: #eff6ff;
+        color: var(--primary-blue);
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.4rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .role-switcher select {
+        border: none;
+        background: none;
+        color: var(--primary-blue);
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background-color: white;
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .action-buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .action-card {
+        background-color: white;
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .action-card:hover {
+        border-color: var(--primary-blue);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .action-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .action-card h3 {
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+      }
+
+      .action-card p {
+        font-size: 0.9rem;
+        color: var(--text-light);
+        margin-bottom: 1rem;
+      }
+
+      .ideas-section {
+        background-color: white;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border-color);
+        padding: 2rem;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .section-header h2 {
+        font-size: 1.5rem;
+        margin: 0;
+      }
+
+      .idea-list {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .idea-item {
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .idea-item:hover {
+        border-color: var(--primary-blue);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .idea-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 0.75rem;
+      }
+
+      .idea-title {
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: var(--text-dark);
+        cursor: pointer;
+      }
+
+      .idea-type {
+        display: inline-block;
+        padding: 0.35rem 0.75rem;
+        border-radius: 0.4rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .idea-type.review {
+        background-color: #dbeafe;
+        color: #0c4a6e;
+      }
+
+      .idea-type.investment {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+
+      .idea-meta {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 0.75rem;
+        font-size: 0.9rem;
+        color: var(--text-light);
+      }
+
+      .idea-description {
+        color: var(--text-light);
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+      }
+
+      .idea-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .idea-stats {
+        display: flex;
+        gap: 1.5rem;
+        font-size: 0.9rem;
+        color: var(--text-light);
+      }
+
+      .idea-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: var(--text-light);
+      }
+
+      .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">🚀 IdeaNest</div>
+      </div>
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link active">
+            <span style="font-size: 1.2rem">📊</span> Dashboard
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="founder-submit-idea.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">💡</span> Submit Idea (Review)
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="founder-submit-startup.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">🚀</span> Submit Startup (Funding)
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="founder-ideas.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">📝</span> My Ideas
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="chat.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">💬</span> Messages
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <hr
+            style="
+              border: none;
+              border-top: 1px solid var(--border-color);
+              margin: 1rem 0;
+            "
+          />
+        </li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link">
+            <span style="font-size: 1.2rem">⚙️</span> Settings
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#" id="logoutBtn" class="sidebar-link">
+            <span style="font-size: 1.2rem">🚪</span> Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">Founder Dashboard</h1>
+        <div class="role-switcher">
+          <span style="font-size: 0.9rem; color: var(--text-light)"
+            >Current Role:</span
+          >
+          <span class="role-badge">Founder</span>
+          <select>
+            <option>Switch Role</option>
+            <option>Founder</option>
+            <option>Investor (if eligible)</option>
+            <option>Advisor</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">3</div>
+          <div class="stat-label">Total Ideas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">12</div>
+          <div class="stat-label">Feedback Received</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">2</div>
+          <div class="stat-label">Investor Interests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">5</div>
+          <div class="stat-label">Active Chats</div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <div class="action-card">
+          <div class="action-icon">💡</div>
+          <h3>Share Idea</h3>
+          <p>Get feedback from advisors on your new concept</p>
+          <a href="founder-submit-idea.html" class="btn btn-primary btn-sm"
+            >Submit Idea</a
+          >
+        </div>
+        <div class="action-card">
+          <div class="action-icon">🚀</div>
+          <h3>Seek Funding</h3>
+          <p>Find investors for your startup project</p>
+          <a href="founder-submit-startup.html" class="btn btn-primary btn-sm"
+            >Submit Startup</a
+          >
+        </div>
+        <div class="action-card">
+          <div class="action-icon">💬</div>
+          <h3>Connect</h3>
+          <p>Chat with advisors and potential investors</p>
+          <a href="chat.html" class="btn btn-primary btn-sm">Open Messages</a>
+        </div>
+      </div>
+
+      <!-- Recent Ideas -->
+      <div class="ideas-section">
+        <div class="section-header">
+          <h2>Recent Ideas</h2>
+          <a
+            href="founder-ideas.html"
+            style="
+              color: var(--primary-blue);
+              text-decoration: none;
+              font-weight: 600;
+            "
+            >View All →</a
+          >
+        </div>
+
+        <div class="idea-list">
+          <!-- Idea 1 -->
+          <div class="idea-item">
+            <div class="idea-header">
+              <div>
+                <div class="idea-title">AI-Powered Learning Platform</div>
+                <span class="idea-type review">Idea Review</span>
+              </div>
+            </div>
+            <div class="idea-meta">
+              <span>📅 2 days ago</span>
+              <span>👁️ 145 views</span>
+            </div>
+            <div class="idea-description">
+              A personalized learning platform using AI to adapt content based
+              on user learning patterns and preferences.
+            </div>
+            <div class="idea-footer">
+              <div class="idea-stats">
+                <span>⭐ 4.5 rating</span>
+                <span>💬 8 feedbacks</span>
+              </div>
+              <div class="idea-actions">
+                <a href="idea-details.html" class="btn btn-outline btn-sm"
+                  >View</a
+                >
+                <button class="btn btn-outline btn-sm">Edit</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Idea 2 -->
+          <div class="idea-item">
+            <div class="idea-header">
+              <div>
+                <div class="idea-title">Sustainable E-Commerce Platform</div>
+                <span class="idea-type investment">Investment Post</span>
+              </div>
+            </div>
+            <div class="idea-meta">
+              <span>📅 1 week ago</span>
+              <span>💰 Seeking $500K</span>
+            </div>
+            <div class="idea-description">
+              Eco-friendly online marketplace connecting sustainable brands with
+              conscious consumers.
+            </div>
+            <div class="idea-footer">
+              <div class="idea-stats">
+                <span>🔥 2 investor interests</span>
+              </div>
+              <div class="idea-actions">
+                <a href="idea-details.html" class="btn btn-outline btn-sm"
+                  >View</a
+                >
+                <button class="btn btn-outline btn-sm">Edit</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Idea 3 -->
+          <div class="idea-item">
+            <div class="idea-header">
+              <div>
+                <div class="idea-title">Healthcare Telemedicine App</div>
+                <span class="idea-type review">Idea Review</span>
+              </div>
+            </div>
+            <div class="idea-meta">
+              <span>📅 3 weeks ago</span>
+              <span>👁️ 234 views</span>
+            </div>
+            <div class="idea-description">
+              Mobile application connecting patients with licensed doctors for
+              virtual consultations and prescriptions.
+            </div>
+            <div class="idea-footer">
+              <div class="idea-stats">
+                <span>⭐ 4.8 rating</span>
+                <span>💬 12 feedbacks</span>
+              </div>
+              <div class="idea-actions">
+                <a href="idea-details.html" class="btn btn-outline btn-sm"
+                  >View</a
+                >
+                <button class="btn btn-outline btn-sm">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications Widget -->
+      <div class="alert alert-info" style="margin-top: 2rem">
+        <span style="font-size: 1.2rem">🔔</span>
+        <div>
+          <strong>New Activity:</strong> You have 3 new feedbacks on your AI
+          Learning Platform idea. Check your notifications for details.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Check if user is logged in - if not, redirect to login
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "login.html";
+      }
+
+      // Check if user needs to complete profile
+      if (
+        localStorage.getItem("userProfile") !== "complete" &&
+        localStorage.getItem("userProfile") !== "skipped"
+      ) {
+        window.location.href = "profile-setup.html";
+      }
+
+      // Handle logout
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          localStorage.clear();
+          window.location.href = "../index.html";
+        });
+    </script>
+  </body>
+</html>

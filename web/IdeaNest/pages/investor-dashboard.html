@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Investor Dashboard - IdeaNest</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <style>
+      .dashboard-container {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: 100vh;
+        background-color: var(--light-gray);
+      }
+
+      .sidebar {
+        background-color: var(--white);
+        border-right: 1px solid var(--border-color);
+        padding: 1.5rem 0;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
+        overflow-y: auto;
+      }
+
+      .sidebar-header {
+        padding: 0 1.5rem 2rem;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 1rem;
+      }
+
+      .sidebar-brand {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+      }
+
+      .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.5rem;
+        color: var(--text-dark);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .sidebar-link:hover {
+        background-color: var(--light-gray);
+        color: var(--primary-blue);
+        padding-left: 2rem;
+      }
+
+      .sidebar-link.active {
+        background-color: #eff6ff;
+        color: var(--primary-blue);
+        border-left: 3px solid var(--primary-blue);
+        padding-left: 1.5rem;
+      }
+
+      .main-content {
+        margin-left: 250px;
+        padding: 2rem;
+      }
+
+      .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      .dashboard-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+
+      .role-badge {
+        background-color: #dcfce7;
+        color: #166534;
+        padding: 0.5rem 1rem;
+        border-radius: 0.4rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .portfolio-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .portfolio-card {
+        background-color: white;
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        text-align: center;
+      }
+
+      .portfolio-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        margin-bottom: 0.25rem;
+      }
+
+      .portfolio-label {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .filter-section {
+        background-color: white;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border-color);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1rem;
+        align-items: end;
+      }
+
+      .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .filter-group label {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--text-dark);
+      }
+
+      .filter-group input,
+      .filter-group select {
+        padding: 0.65rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .startups-container {
+        background-color: white;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border-color);
+        padding: 2rem;
+      }
+
+      .startups-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .startup-card {
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 1.5rem;
+        align-items: start;
+      }
+
+      .startup-card:hover {
+        border-color: var(--primary-blue);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+      }
+
+      .startup-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .startup-logo {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        font-weight: 700;
+      }
+
+      .startup-header {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+
+      .startup-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+
+      .startup-tagline {
+        color: var(--text-light);
+        font-size: 0.9rem;
+      }
+
+      .startup-meta {
+        display: flex;
+        gap: 1.5rem;
+        font-size: 0.9rem;
+        color: var(--text-light);
+        flex-wrap: wrap;
+      }
+
+      .startup-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        background-color: #eff6ff;
+        color: var(--primary-blue);
+        padding: 0.35rem 0.75rem;
+        border-radius: 0.4rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .funding-badge {
+        background-color: #dcfce7;
+        color: #166534;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        min-width: 120px;
+      }
+
+      .funding-amount {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #166534;
+      }
+
+      .funding-stage {
+        font-size: 0.8rem;
+        color: #166534;
+        font-weight: 600;
+      }
+
+      .startup-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .startup-actions button {
+        width: 100%;
+      }
+
+      .traction-list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .traction-item {
+        text-align: center;
+      }
+
+      .traction-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+      }
+
+      .traction-label {
+        color: var(--text-light);
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+      }
+
+      .view-mode-toggle {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .view-toggle-btn {
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--border-color);
+        background-color: white;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+
+      .view-toggle-btn.active {
+        background-color: var(--primary-blue);
+        color: white;
+        border-color: var(--primary-blue);
+      }
+
+      .view-toggle-btn:hover {
+        border-color: var(--primary-blue);
+      }
+
+      @media (max-width: 768px) {
+        .dashboard-container {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          display: none;
+        }
+
+        .main-content {
+          margin-left: 0;
+        }
+
+        .startup-card {
+          grid-template-columns: 1fr;
+        }
+
+        .filter-section {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">🚀 IdeaNest</div>
+      </div>
+      <ul class="sidebar-menu">
+        <li>
+          <a href="#" class="sidebar-link active">
+            <span style="font-size: 1.2rem">📊</span> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-link">
+            <span style="font-size: 1.2rem">🎯</span> Browse Startups
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-link">
+            <span style="font-size: 1.2rem">💼</span> My Portfolio
+          </a>
+        </li>
+        <li>
+          <a href="chat.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">💬</span> Messages
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-link">
+            <span style="font-size: 1.2rem">❤️</span> Saved Startups
+          </a>
+        </li>
+        <li>
+          <hr
+            style="
+              border: none;
+              border-top: 1px solid var(--border-color);
+              margin: 1rem 0;
+            "
+          />
+        </li>
+        <li>
+          <a href="#" class="sidebar-link">
+            <span style="font-size: 1.2rem">⚙️</span> Settings
+          </a>
+        </li>
+        <li>
+          <a href="../index.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">🚪</span> Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">Investor Dashboard</h1>
+        <span class="role-badge">💰 Investor</span>
+      </div>
+
+      <!-- Portfolio Stats -->
+      <div class="portfolio-section">
+        <div class="portfolio-card">
+          <div class="portfolio-value">$250K</div>
+          <div class="portfolio-label">Total Invested</div>
+        </div>
+        <div class="portfolio-card">
+          <div class="portfolio-value">5</div>
+          <div class="portfolio-label">Active Investments</div>
+        </div>
+        <div class="portfolio-card">
+          <div class="portfolio-value">+12%</div>
+          <div class="portfolio-label">Portfolio Return</div>
+        </div>
+        <div class="portfolio-card">
+          <div class="portfolio-value">23</div>
+          <div class="portfolio-label">Startups Watched</div>
+        </div>
+      </div>
+
+      <!-- Filters & View Toggle -->
+      <div
+        style="
+          display: grid;
+          grid-template-columns: 1fr auto;
+          gap: 1.5rem;
+          align-items: end;
+          margin-bottom: 2rem;
+        "
+      >
+        <div class="filter-section" style="margin-bottom: 0">
+          <div class="filter-group">
+            <label>Industry</label>
+            <select>
+              <option value="">All Industries</option>
+              <option>Technology</option>
+              <option>Healthcare</option>
+              <option>E-Commerce</option>
+              <option>Finance</option>
+              <option>Education</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Funding Stage</label>
+            <select>
+              <option value="">All Stages</option>
+              <option>Seed</option>
+              <option>Series A</option>
+              <option>Series B</option>
+              <option>Series C+</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Budget Range</label>
+            <select>
+              <option value="">Any</option>
+              <option>$10K - $100K</option>
+              <option>$100K - $500K</option>
+              <option>$500K - $1M</option>
+              <option>$1M+</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-sm">Apply Filters</button>
+        </div>
+        <div class="view-mode-toggle" style="margin-bottom: 0">
+          <button class="view-toggle-btn active">📊 List</button>
+          <button class="view-toggle-btn">🔲 Grid</button>
+        </div>
+      </div>
+
+      <!-- Startups -->
+      <div class="startups-container">
+        <div class="startups-header">
+          <h2 style="margin: 0; font-size: 1.4rem">Investment Opportunities</h2>
+          <span style="color: var(--text-light); font-size: 0.9rem"
+            >Showing 1 - 4 of 127</span
+          >
+        </div>
+
+        <!-- Startup Card 1 -->
+        <div class="startup-card">
+          <div class="startup-info">
+            <div class="startup-header">
+              <div class="startup-logo">🤖</div>
+              <div>
+                <div class="startup-title">TechLearn AI</div>
+                <div class="startup-tagline">
+                  AI-powered personalized learning platform
+                </div>
+              </div>
+            </div>
+            <div class="startup-meta">
+              <span>📍 San Francisco, CA</span>
+              <span>👥 5 team members</span>
+              <span>📅 Founded 2023</span>
+            </div>
+            <div class="startup-tags">
+              <span class="tag">💻 EdTech</span>
+              <span class="tag">🤖 AI/ML</span>
+              <span class="tag">📱 SaaS</span>
+            </div>
+            <div class="traction-list">
+              <div class="traction-item">
+                <div class="traction-value">50K+</div>
+                <div class="traction-label">Users</div>
+              </div>
+              <div class="traction-item">
+                <div class="traction-value">$120K</div>
+                <div class="traction-label">MRR</div>
+              </div>
+              <div class="traction-item">
+                <div class="traction-value">40%</div>
+                <div class="traction-label">MoM Growth</div>
+              </div>
+            </div>
+          </div>
+          <div class="startup-actions">
+            <div class="funding-badge">
+              <div class="funding-amount">$500K</div>
+              <div class="funding-stage">Series A</div>
+            </div>
+            <button class="btn btn-primary btn-sm">View Details</button>
+            <button class="btn btn-secondary btn-sm">Save Startup</button>
+            <button class="btn btn-outline btn-sm">Connect</button>
+          </div>
+        </div>
+
+        <!-- Startup Card 2 -->
+        <div class="startup-card">
+          <div class="startup-info">
+            <div class="startup-header">
+              <div
+                class="startup-logo"
+                style="
+                  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                "
+              >
+                ⚕️
+              </div>
+              <div>
+                <div class="startup-title">HealthNet</div>
+                <div class="startup-tagline">
+                  Telemedicine platform connecting patients and doctors
+                </div>
+              </div>
+            </div>
+            <div class="startup-meta">
+              <span>📍 New York, NY</span>
+              <span>👥 12 team members</span>
+              <span>📅 Founded 2022</span>
+            </div>
+            <div class="startup-tags">
+              <span class="tag">🏥 Healthcare</span>
+              <span class="tag">📱 Mobile</span>
+              <span class="tag">🌐 B2C</span>
+            </div>
+            <div class="traction-list">
+              <div class="traction-item">
+                <div class="traction-value">150K+</div>
+                <div class="traction-label">Active Users</div>
+              </div>
+              <div class="traction-item">
+                <div class="traction-value">$250K</div>
+                <div class="traction-label">MRR</div>
+              </div>
+              <div class="traction-item">
+                <div class="traction-value">55%</div>
+                <div class="traction-label">QoQ Growth</div>
+              </div>
+            </div>
+          </div>
+          <div class="startup-actions">
+            <div
+              class="funding-badge"
+              style="background-color: #fef3c7; color: #92400e"
+            >
+              <div class="funding-amount" style="color: #92400e">$750K</div>
+              <div class="funding-stage" style="color: #92400e">Series A</div>
+            </div>
+            <button class="btn btn-primary btn-sm">View Details</button>
+            <button class="btn btn-secondary btn-sm">Save Startup</button>
+            <button class="btn btn-outline btn-sm">Connect</button>
+          </div>
+        </div>
+
+        <!-- Startup Card 3 -->
+        <div class="startup-card">
+          <div class="startup-info">
+            <div class="startup-header">
+              <div
+                class="startup-logo"
+                style="
+                  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+                "
+              >
+                🛍️
+              </div>
+              <div>
+                <div class="startup-title">EcoMart</div>
+                <div class="startup-tagline">
+                  Sustainable e-commerce marketplace
+                </div>
+              </div>
+            </div>
+            <div class="startup-meta">
+              <span>📍 Austin, TX</span>
+              <span>👥 8 team members</span>
+              <span>📅 Founded 2023</span>
+            </div>
+            <div class="startup-tags">
+              <span class="tag">♻️ Sustainability</span>
+              <span class="tag">🛒 E-Commerce</span>
+              <span class="tag">🌍 Impact</span>
+            </div>
+            <div class="traction-list">
+              <div class="traction-item">
+                <div class="traction-value">25K+</div>
+                <div class="traction-label">Products</div>
+              </div>
+              <div class="traction-item">
+                <div class="traction-value">$85K</div>
+                <div class="traction-label">MRR</div>
+              </div>
+              <div class="traction-item">
+                <div class="traction-value">60%</div>
+                <div class="traction-label">MoM Growth</div>
+              </div>
+            </div>
+          </div>
+          <div class="startup-actions">
+            <div
+              class="funding-badge"
+              style="background-color: #dbeafe; color: #0c4a6e"
+            >
+              <div class="funding-amount" style="color: #0c4a6e">$250K</div>
+              <div class="funding-stage" style="color: #0c4a6e">Seed</div>
+            </div>
+            <button class="btn btn-primary btn-sm">View Details</button>
+            <button class="btn btn-secondary btn-sm">Save Startup</button>
+            <button class="btn btn-outline btn-sm">Connect</button>
+          </div>
+        </div>
+
+        <!-- Load More -->
+        <div style="text-align: center; padding: 2rem; margin-top: 1rem">
+          <button class="btn btn-outline">Load More Startups</button>
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="alert alert-info" style="margin-top: 2rem">
+        <span style="font-size: 1rem">ℹ️</span>
+        <div>
+          <strong>Note:</strong> You can only see Investment Posts (Startup
+          Funding) here. Idea Review posts are for advisors. Click "Connect" to
+          start a conversation with founders.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Check if user is logged in - if not, redirect to login
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "login.html";
+      }
+
+      // Check if user needs to complete profile
+      if (
+        localStorage.getItem("userProfile") !== "complete" &&
+        localStorage.getItem("userProfile") !== "skipped"
+      ) {
+        window.location.href = "profile-setup.html";
+      }
+
+      // Handle logout
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          localStorage.clear();
+          window.location.href = "../index.html";
+        });
+    </script>
+  </body>
+</html>

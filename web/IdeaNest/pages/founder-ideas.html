@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Ideas & Startups - IdeaNest</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <style>
+      .dashboard-container {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: 100vh;
+        background-color: var(--light-gray);
+      }
+
+      .sidebar {
+        background-color: var(--white);
+        border-right: 1px solid var(--border-color);
+        padding: 1.5rem 0;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
+        overflow-y: auto;
+      }
+
+      .sidebar-header {
+        padding: 0 1.5rem 2rem;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 1rem;
+      }
+
+      .sidebar-brand {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+      }
+
+      .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.5rem;
+        color: var(--text-dark);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .sidebar-link:hover {
+        background-color: var(--light-gray);
+        color: var(--primary-blue);
+        padding-left: 2rem;
+      }
+
+      .sidebar-link.active {
+        background-color: #eff6ff;
+        color: var(--primary-blue);
+        border-left: 3px solid var(--primary-blue);
+        padding-left: 1.5rem;
+      }
+
+      .main-content {
+        margin-left: 250px;
+        padding: 2rem;
+      }
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      .page-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+
+      .filter-section {
+        background-color: white;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border-color);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1rem;
+        align-items: end;
+      }
+
+      .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .filter-group label {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--text-dark);
+      }
+
+      .filter-group input,
+      .filter-group select {
+        padding: 0.65rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .ideas-list {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .idea-card {
+        background-color: white;
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 1.5rem;
+        align-items: start;
+      }
+
+      .idea-card:hover {
+        border-color: var(--primary-blue);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+      }
+
+      .idea-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .idea-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .idea-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        cursor: pointer;
+      }
+
+      .idea-title:hover {
+        color: var(--primary-blue);
+      }
+
+      .badge-type {
+        display: inline-block;
+        padding: 0.35rem 0.75rem;
+        border-radius: 0.4rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .badge-review {
+        background-color: #dbeafe;
+        color: #0c4a6e;
+      }
+
+      .badge-investment {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+
+      .idea-meta {
+        display: flex;
+        gap: 1.5rem;
+        font-size: 0.9rem;
+        color: var(--text-light);
+        flex-wrap: wrap;
+      }
+
+      .idea-description {
+        color: var(--text-light);
+        line-height: 1.6;
+        margin: 0.5rem 0;
+      }
+
+      .idea-stats {
+        display: flex;
+        gap: 2rem;
+        font-size: 0.9rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .stat-value {
+        font-weight: 700;
+        color: var(--primary-blue);
+      }
+
+      .idea-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+
+      .status-indicator {
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .status-published {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+
+      .status-draft {
+        background-color: #e5e7eb;
+        color: #6b7280;
+      }
+
+      .status-closed {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      .empty-state {
+        background-color: white;
+        border: 2px dashed var(--border-color);
+        border-radius: 0.75rem;
+        padding: 4rem 2rem;
+        text-align: center;
+        color: var(--text-light);
+      }
+
+      .empty-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      .empty-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+      }
+
+      .empty-text {
+        margin-bottom: 1.5rem;
+      }
+
+      .tabs-container {
+        display: flex;
+        gap: 0;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .tab-button {
+        padding: 1rem 1.5rem;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--text-light);
+        border-bottom: 2px solid transparent;
+        transition: all 0.3s ease;
+      }
+
+      .tab-button:hover {
+        color: var(--primary-blue);
+      }
+
+      .tab-button.active {
+        color: var(--primary-blue);
+        border-bottom-color: var(--primary-blue);
+      }
+
+      @media (max-width: 768px) {
+        .dashboard-container {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          display: none;
+        }
+
+        .main-content {
+          margin-left: 0;
+        }
+
+        .idea-card {
+          grid-template-columns: 1fr;
+        }
+
+        .filter-section {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">🚀 IdeaNest</div>
+      </div>
+      <ul class="sidebar-menu">
+        <li>
+          <a href="founder-dashboard.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">📊</span> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="founder-submit-idea.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">💡</span> Submit Idea (Review)
+          </a>
+        </li>
+        <li>
+          <a href="founder-submit-startup.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">🚀</span> Submit Startup (Funding)
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-link active">
+            <span style="font-size: 1.2rem">📝</span> My Ideas
+          </a>
+        </li>
+        <li>
+          <a href="chat.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">💬</span> Messages
+          </a>
+        </li>
+        <li>
+          <hr
+            style="
+              border: none;
+              border-top: 1px solid var(--border-color);
+              margin: 1rem 0;
+            "
+          />
+        </li>
+        <li>
+          <a href="#" class="sidebar-link">
+            <span style="font-size: 1.2rem">⚙️</span> Settings
+          </a>
+        </li>
+        <li>
+          <a href="#" id="logoutBtn" class="sidebar-link">
+            <span style="font-size: 1.2rem">🚪</span> Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="page-header">
+        <h1 class="page-title">My Ideas & Startups</h1>
+        <div style="display: flex; gap: 1rem">
+          <a href="founder-submit-idea.html" class="btn btn-outline btn-sm"
+            >+ Add Idea</a
+          >
+          <a href="founder-submit-startup.html" class="btn btn-primary btn-sm"
+            >+ Add Startup</a
+          >
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs-container">
+        <button class="tab-button active">All Posts (3)</button>
+        <button class="tab-button">Ideas (1)</button>
+        <button class="tab-button">Startups (2)</button>
+        <button class="tab-button">Drafts (0)</button>
+      </div>
+
+      <!-- Filters -->
+      <div class="filter-section">
+        <div class="filter-group">
+          <label>Type</label>
+          <select>
+            <option value="">All Types</option>
+            <option>Idea Review</option>
+            <option>Investment Post</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Status</label>
+          <select>
+            <option value="">All Statuses</option>
+            <option>Published</option>
+            <option>Draft</option>
+            <option>Closed</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Sort By</label>
+          <select>
+            <option>Newest First</option>
+            <option>Most Popular</option>
+            <option>Most Feedback</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-sm">Apply Filters</button>
+      </div>
+
+      <!-- Ideas List -->
+      <div class="ideas-list">
+        <!-- Idea Card 1 -->
+        <div class="idea-card">
+          <div class="idea-content">
+            <div class="idea-header">
+              <div style="flex: 1">
+                <a href="idea-details.html" class="idea-title"
+                  >AI-Powered Learning Platform</a
+                >
+                <span class="badge-type badge-review">💡 Idea Review</span>
+              </div>
+            </div>
+            <div class="idea-meta">
+              <span>📅 Submitted 2 days ago</span>
+              <span>📊 Published</span>
+            </div>
+            <p class="idea-description">
+              A personalized learning platform using AI to adapt content based
+              on user learning patterns and preferences.
+            </p>
+            <div class="idea-stats">
+              <div class="stat-item">
+                <span>👁️</span>
+                <span><span class="stat-value">145</span> views</span>
+              </div>
+              <div class="stat-item">
+                <span>⭐</span>
+                <span><span class="stat-value">4.5</span> rating</span>
+              </div>
+              <div class="stat-item">
+                <span>💬</span>
+                <span><span class="stat-value">8</span> feedbacks</span>
+              </div>
+            </div>
+          </div>
+          <div class="idea-actions">
+            <div class="status-indicator status-published">Published</div>
+            <a href="idea-details.html" class="btn btn-primary btn-sm">View</a>
+            <button class="btn btn-outline btn-sm">Edit</button>
+            <button class="btn btn-outline btn-sm">Close</button>
+          </div>
+        </div>
+
+        <!-- Idea Card 2 -->
+        <div class="idea-card">
+          <div class="idea-content">
+            <div class="idea-header">
+              <div style="flex: 1">
+                <a href="#" class="idea-title"
+                  >Sustainable E-Commerce Platform</a
+                >
+                <span class="badge-type badge-investment"
+                  >🚀 Investment Post</span
+                >
+              </div>
+            </div>
+            <div class="idea-meta">
+              <span>📅 Submitted 1 week ago</span>
+              <span>📊 Published</span>
+              <span>💰 Seeking $500K</span>
+            </div>
+            <p class="idea-description">
+              Eco-friendly online marketplace connecting sustainable brands with
+              conscious consumers.
+            </p>
+            <div class="idea-stats">
+              <div class="stat-item">
+                <span>👁️</span>
+                <span><span class="stat-value">89</span> views</span>
+              </div>
+              <div class="stat-item">
+                <span>🔥</span>
+                <span
+                  ><span class="stat-value">2</span> investor interests</span
+                >
+              </div>
+              <div class="stat-item">
+                <span>💬</span>
+                <span><span class="stat-value">3</span> conversations</span>
+              </div>
+            </div>
+          </div>
+          <div class="idea-actions">
+            <div class="status-indicator status-published">Published</div>
+            <button class="btn btn-primary btn-sm">View Details</button>
+            <button class="btn btn-outline btn-sm">Edit</button>
+            <button class="btn btn-outline btn-sm">Close</button>
+          </div>
+        </div>
+
+        <!-- Idea Card 3 -->
+        <div class="idea-card">
+          <div class="idea-content">
+            <div class="idea-header">
+              <div style="flex: 1">
+                <a href="#" class="idea-title">Healthcare Telemedicine App</a>
+                <span class="badge-type badge-review">💡 Idea Review</span>
+              </div>
+            </div>
+            <div class="idea-meta">
+              <span>📅 Submitted 3 weeks ago</span>
+              <span>📊 Published</span>
+            </div>
+            <p class="idea-description">
+              Mobile application connecting patients with licensed doctors for
+              virtual consultations and prescriptions.
+            </p>
+            <div class="idea-stats">
+              <div class="stat-item">
+                <span>👁️</span>
+                <span><span class="stat-value">234</span> views</span>
+              </div>
+              <div class="stat-item">
+                <span>⭐</span>
+                <span><span class="stat-value">4.8</span> rating</span>
+              </div>
+              <div class="stat-item">
+                <span>💬</span>
+                <span><span class="stat-value">12</span> feedbacks</span>
+              </div>
+            </div>
+          </div>
+          <div class="idea-actions">
+            <div class="status-indicator status-published">Published</div>
+            <a href="idea-details.html" class="btn btn-primary btn-sm">View</a>
+            <button class="btn btn-outline btn-sm">Edit</button>
+            <button class="btn btn-outline btn-sm">Close</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          gap: 1rem;
+          margin-top: 2rem;
+        "
+      >
+        <button class="btn btn-outline btn-sm" disabled>← Previous</button>
+        <button class="btn btn-primary btn-sm">1</button>
+        <button class="btn btn-outline btn-sm">2</button>
+        <button class="btn btn-outline btn-sm">Next →</button>
+      </div>
+
+      <!-- Info Alert -->
+      <div class="alert alert-info" style="margin-top: 2rem">
+        <span style="font-size: 1rem">ℹ️</span>
+        <div>
+          <strong>Tip:</strong> Monitor your ideas' performance! Track views,
+          ratings, and feedback. Ideas with higher engagement attract more
+          interest from investors and advisors.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Check if user is logged in - if not, redirect to login
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "login.html";
+      }
+
+      // Handle logout
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          localStorage.clear();
+          window.location.href = "../index.html";
+        });
+    </script>
+  </body>
+</html>

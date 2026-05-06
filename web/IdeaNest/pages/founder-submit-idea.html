@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Idea for Review - IdeaNest</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <style>
+      .dashboard-container {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: 100vh;
+        background-color: var(--light-gray);
+      }
+
+      .sidebar {
+        background-color: var(--white);
+        border-right: 1px solid var(--border-color);
+        padding: 1.5rem 0;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
+        overflow-y: auto;
+      }
+
+      .sidebar-header {
+        padding: 0 1.5rem 2rem;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 1rem;
+      }
+
+      .sidebar-brand {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+      }
+
+      .sidebar-menu {
+        list-style: none;
+      }
+
+      .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.5rem;
+        color: var(--text-dark);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .sidebar-link:hover {
+        background-color: var(--light-gray);
+        color: var(--primary-blue);
+        padding-left: 2rem;
+      }
+
+      .sidebar-link.active {
+        background-color: #eff6ff;
+        color: var(--primary-blue);
+        border-left: 3px solid var(--primary-blue);
+        padding-left: 1.5rem;
+      }
+
+      .main-content {
+        margin-left: 250px;
+        padding: 2rem;
+      }
+
+      .form-container {
+        max-width: 800px;
+        background-color: white;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border-color);
+        padding: 2rem;
+      }
+
+      .form-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .form-header h1 {
+        margin-bottom: 0.5rem;
+        color: var(--text-dark);
+      }
+
+      .form-header p {
+        color: var(--text-light);
+      }
+
+      .mode-indicator {
+        display: inline-block;
+        background-color: #dbeafe;
+        color: #0c4a6e;
+        padding: 0.5rem 1rem;
+        border-radius: 0.4rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .form-section {
+        margin-bottom: 2rem;
+      }
+
+      .form-section-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--text-dark);
+      }
+
+      .section-description {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .char-count {
+        font-size: 0.8rem;
+        color: var(--text-light);
+        text-align: right;
+        margin-top: 0.25rem;
+      }
+
+      .category-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .category-option {
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .category-option:hover {
+        border-color: var(--primary-blue);
+        background-color: #f0f9ff;
+      }
+
+      .category-option input {
+        display: none;
+      }
+
+      .category-option.selected {
+        border-color: var(--primary-blue);
+        background-color: #eff6ff;
+        color: var(--primary-blue);
+      }
+
+      .form-footer {
+        display: flex;
+        gap: 1rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+        justify-content: space-between;
+      }
+
+      .alert-comparison {
+        background-color: #f0f9ff;
+        border: 1px solid #bae6fd;
+        color: #0c4a6e;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid #bae6fd;
+      }
+
+      .comparison-table th {
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+
+      .comparison-table .highlight {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">🚀 IdeaNest</div>
+      </div>
+      <ul class="sidebar-menu">
+        <li>
+          <a href="founder-dashboard.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">📊</span> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-link active">
+            <span style="font-size: 1.2rem">💡</span> Submit Idea (Review)
+          </a>
+        </li>
+        <li>
+          <a href="founder-submit-startup.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">🚀</span> Submit Startup (Funding)
+          </a>
+        </li>
+        <li>
+          <a href="founder-ideas.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">📝</span> My Ideas
+          </a>
+        </li>
+        <li>
+          <a href="chat.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">💬</span> Messages
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="form-container">
+        <!-- Header -->
+        <div class="form-header">
+          <div class="mode-indicator">💡 Idea Review Mode</div>
+          <h1>Submit Your Idea for Review</h1>
+          <p>
+            Share your concept and get expert feedback from advisors to improve
+            your idea
+          </p>
+        </div>
+
+        <!-- Comparison Info -->
+        <div class="alert-comparison">
+          <strong style="display: block; margin-bottom: 1rem"
+            >📋 Why "Idea Review" vs "Investment Post"?</strong
+          >
+          <table class="comparison-table">
+            <tr>
+              <th></th>
+              <th>This (Idea Review)</th>
+              <th>Startup (Investment)</th>
+            </tr>
+            <tr>
+              <td><strong>Purpose</strong></td>
+              <td class="highlight">Get feedback</td>
+              <td>Seek funding</td>
+            </tr>
+            <tr>
+              <td><strong>Audience</strong></td>
+              <td class="highlight">Advisors</td>
+              <td>Investors</td>
+            </tr>
+            <tr>
+              <td><strong>Request</strong></td>
+              <td class="highlight">Suggestions only</td>
+              <td>Money/Investment</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Form -->
+        <form>
+          <!-- Section 1: Basic Info -->
+          <div class="form-section">
+            <div class="form-section-title">📝 Basic Information</div>
+            <div class="section-description">Tell us about your idea</div>
+
+            <div class="form-group">
+              <label>Idea Title *</label>
+              <input
+                type="text"
+                placeholder="e.g., AI-Powered Learning Platform"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Category *</label>
+              <div class="category-options">
+                <label class="category-option selected">
+                  <input type="radio" name="category" value="tech" checked />
+                  <span style="cursor: pointer">💻 Technology</span>
+                </label>
+                <label class="category-option">
+                  <input type="radio" name="category" value="health" />
+                  <span style="cursor: pointer">🏥 Healthcare</span>
+                </label>
+                <label class="category-option">
+                  <input type="radio" name="category" value="ecom" />
+                  <span style="cursor: pointer">🛍️ E-Commerce</span>
+                </label>
+                <label class="category-option">
+                  <input type="radio" name="category" value="finance" />
+                  <span style="cursor: pointer">💰 Finance</span>
+                </label>
+                <label class="category-option">
+                  <input type="radio" name="category" value="education" />
+                  <span style="cursor: pointer">📚 Education</span>
+                </label>
+                <label class="category-option">
+                  <input type="radio" name="category" value="other" />
+                  <span style="cursor: pointer">⭐ Other</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: The Problem -->
+          <div class="form-section">
+            <div class="form-section-title">🔍 The Problem</div>
+            <div class="section-description">What problem are you solving?</div>
+
+            <div class="form-group">
+              <label>Problem Statement *</label>
+              <textarea
+                placeholder="Describe the problem your idea addresses..."
+                required
+              ></textarea>
+              <div class="char-count">0/500</div>
+            </div>
+
+            <div class="form-group">
+              <label>Target Audience</label>
+              <input
+                type="text"
+                placeholder="Who is affected by this problem?"
+              />
+            </div>
+          </div>
+
+          <!-- Section 3: Your Solution -->
+          <div class="form-section">
+            <div class="form-section-title">💡 Your Solution</div>
+            <div class="section-description">
+              How does your idea solve this problem?
+            </div>
+
+            <div class="form-group">
+              <label>Solution Description *</label>
+              <textarea
+                placeholder="Explain your solution and how it addresses the problem..."
+                required
+              ></textarea>
+              <div class="char-count">0/500</div>
+            </div>
+
+            <div class="form-group">
+              <label>Key Features / USP</label>
+              <input
+                type="text"
+                placeholder="What makes your solution unique?"
+              />
+            </div>
+          </div>
+
+          <!-- Section 4: Additional Details -->
+          <div class="form-section">
+            <div class="form-section-title">📄 Additional Details</div>
+            <div class="section-description">
+              Help advisors understand your idea better
+            </div>
+
+            <div class="form-group">
+              <label>Full Description</label>
+              <textarea
+                placeholder="Add any additional context, market insights, or details..."
+              ></textarea>
+              <div class="char-count">0/1000</div>
+            </div>
+
+            <div class="form-group">
+              <label>What Feedback Are You Looking For?</label>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                  gap: 1rem;
+                "
+              >
+                <label style="display: flex; align-items: center; gap: 0.5rem">
+                  <input type="checkbox" /> Business Validation
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.5rem">
+                  <input type="checkbox" /> Technical Feasibility
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.5rem">
+                  <input type="checkbox" /> Market Analysis
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.5rem">
+                  <input type="checkbox" /> Go-to-Market Strategy
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Attachments (optional)</label>
+              <input type="file" multiple />
+              <small style="color: var(--text-light)"
+                >Max 5 files, PDF/Image/PPT only</small
+              >
+            </div>
+          </div>
+
+          <!-- Form Footer -->
+          <div class="form-footer">
+            <button type="button" class="btn btn-outline">Save as Draft</button>
+            <div>
+              <button type="button" class="btn btn-outline">Cancel</button>
+              <button type="submit" class="btn btn-primary">
+                Submit for Review
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Info Box -->
+        <div class="alert alert-info" style="margin-top: 2rem">
+          <span style="font-size: 1rem">ℹ️</span>
+          <div>
+            <strong>Next Steps:</strong> After submission, advisors will have
+            access to your idea. You'll receive notifications when they provide
+            feedback.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Check if user is logged in - if not, redirect to login
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "login.html";
+      }
+
+      // Category selection
+      document.querySelectorAll(".category-option input").forEach((radio) => {
+        radio.addEventListener("change", function () {
+          document.querySelectorAll(".category-option").forEach((opt) => {
+            opt.classList.remove("selected");
+          });
+          this.parentElement.classList.add("selected");
+        });
+      });
+
+      // Character count
+      document.querySelectorAll("textarea").forEach((textarea) => {
+        textarea.addEventListener("input", function () {
+          const nextDiv = this.nextElementSibling;
+          if (nextDiv && nextDiv.classList.contains("char-count")) {
+            const max = parseInt(nextDiv.textContent.split("/")[1]);
+            nextDiv.textContent = `${this.value.length}/${max}`;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

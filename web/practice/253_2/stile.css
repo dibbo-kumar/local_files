@@ -1,0 +1,183 @@
+.body{
+    display: flex;
+    flex-direction: column;
+}
+.rowone{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    justify-content: space-between;
+}
+.dashboard{
+    font-weight: bold;
+    font-size: large;
+}
+.page{
+    justify-content: center;
+    font-weight: bold;
+    text-decoration: none;
+}
+.selected{
+    color: blue;
+    padding: 10px;
+    text-decoration: none;
+}
+.nonselected{
+    color: black;
+    font-weight: bold;
+    padding: 10px;
+    text-decoration: none;
+}
+.main{
+    background-color: #ebebeb;
+    height: auto;
+}
+.profile{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.Name{
+    padding-right: 20px;
+}
+.john{
+    font-weight: bold;
+}
+.icon{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.hiwelcome{
+    padding: 20px;
+    /* border-bottom: 30px; */
+}
+.hi{
+    font-size: 20px;
+}
+.welcome{
+    padding-bottom: 40px;
+}
+.rowtwo{
+    display: flex;
+    flex-direction: row;
+}
+.left{
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(255, 255, 255);
+    width: 40%;
+    padding: 20px;
+    align-items: center;
+    justify-content:space-around;
+    border-radius: 10px;
+    /* padding-left: 5px; */
+}
+.l1{
+    /* padding-top: 70px; */
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: blue;
+    /* padding-left: 10px; */
+}
+.l2{
+    padding-right: 200px;
+}
+.l2 h1{
+    font-size: 30px;
+}
+.l2 h2{
+    font-size: 20px;
+}
+.l3up{
+    padding-bottom: 30px;
+}
+.middle{
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items:center;
+
+}
+.midup{
+    padding: 30px;
+    background-color: rgb(255, 255, 255);
+    width: 200px;
+    border-radius: 10px;
+}
+.middown{
+    padding: 30px;
+    background-color: rgb(255, 255, 255);
+    width: 200px ;
+    border-radius: 10px;
+}
+.tasknumber{
+    font-weight: bold;
+    font-size: 30px;
+}
+.right{
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    justify-content: space-between;
+}
+.rup{
+    padding: 30px;
+}
+.rdown{
+    padding: 30px;
+}
+.amount{
+    font-weight: bold;
+    font-size: 40px;
+}
+.rowthree{
+    font-weight: bold;
+    font-size: 25px;
+    padding: 10px;
+}
+.rowfour{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    /* background-color: white; */
+    padding: 10px;
+    padding-bottom: 10px;
+}
+.cards{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    
+    /* height: 150px; */
+    /* align-items: space-between; */
+    /* justify-content: space-between; */
+    gap: 20px;
+    height: 200px;
+    border-radius: 10px;
+    padding: 20px;
+}
+.uiucanteen{
+    font-weight: bold;
+    font-size: 25px;
+}
+.design{
+    padding: 10px;
+    background-color: rgb(100, 100, 149);
+    align-self: flex-start;
+    border-radius: 30px;
+}

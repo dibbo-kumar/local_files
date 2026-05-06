@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Startup Details - IdeaNest</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <style>
+      body {
+        background-color: var(--light-gray);
+      }
+
+      .navbar {
+        background-color: white;
+        border-bottom: 1px solid var(--border-color);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .navbar-brand {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+      }
+
+      .navbar-actions {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        gap: 2rem;
+        padding: 0 2rem;
+      }
+
+      .main-content {
+        background-color: white;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border-color);
+        padding: 2rem;
+      }
+
+      .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .startup-header {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .startup-logo {
+        width: 80px;
+        height: 80px;
+        border-radius: 0.75rem;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2.5rem;
+        flex-shrink: 0;
+      }
+
+      .startup-title-block {
+        flex: 1;
+      }
+
+      .startup-name {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 0.25rem;
+      }
+
+      .startup-tagline {
+        color: var(--text-light);
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .startup-meta {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--text-light);
+      }
+
+      .meta-value {
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+
+      .tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+      }
+
+      .tag {
+        background-color: #dbeafe;
+        color: #0c4a6e;
+        padding: 0.35rem 0.75rem;
+        border-radius: 0.4rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .section {
+        margin-bottom: 2.5rem;
+      }
+
+      .section-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--primary-blue);
+      }
+
+      .section-content {
+        line-height: 1.8;
+        color: var(--text-light);
+      }
+
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .metric-card {
+        background-color: var(--light-gray);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        text-align: center;
+      }
+
+      .metric-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+      }
+
+      .metric-label {
+        font-size: 0.85rem;
+        color: var(--text-light);
+        margin-top: 0.25rem;
+      }
+
+      .button-row {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .pitch-section {
+        background-color: var(--light-gray);
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        margin-top: 1.5rem;
+      }
+
+      .file-icon {
+        width: 40px;
+        height: 40px;
+        background-color: white;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+      }
+
+      .file-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background-color: white;
+        border-radius: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .file-info {
+        flex: 1;
+      }
+
+      .file-name {
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 0.25rem;
+      }
+
+      .file-size {
+        font-size: 0.85rem;
+        color: var(--text-light);
+      }
+
+      .sidebar-card {
+        background-color: white;
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+      }
+
+      .card-title {
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+      }
+
+      .funding-badge {
+        background-color: #dcfce7;
+        color: #166534;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        margin-bottom: 0.75rem;
+        font-weight: 700;
+      }
+
+      .funding-label {
+        font-size: 0.85rem;
+        color: var(--text-light);
+      }
+
+      .founder-card {
+        background-color: var(--light-gray);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .founder-name {
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+
+      .founder-role {
+        font-size: 0.85rem;
+        color: var(--text-light);
+      }
+
+      .contact-button {
+        width: 100%;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          grid-template-columns: 1fr;
+        }
+
+        .startup-header {
+          flex-direction: column;
+        }
+
+        .metrics-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .button-row {
+          flex-direction: column;
+        }
+
+        .button-row button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="navbar">
+      <div class="navbar-brand">🚀 IdeaNest</div>
+      <div class="navbar-actions">
+        <a href="investor-dashboard.html" class="btn btn-outline btn-sm"
+          >← Back to Startups</a
+        >
+        <a href="#" id="logoutBtn" class="btn btn-outline btn-sm">Logout</a>
+      </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Header -->
+        <div class="startup-header">
+          <div class="startup-logo">🌱</div>
+          <div class="startup-title-block">
+            <div class="startup-name">GreenTech Solutions</div>
+            <div class="startup-tagline">
+              Sustainable E-Commerce Platform Connecting Eco-Conscious Brands
+            </div>
+            <div class="startup-meta">
+              <div class="meta-item">
+                <span>📍</span>
+                <span>San Francisco, CA</span>
+              </div>
+              <div class="meta-item">
+                <span>👥</span>
+                <span><span class="meta-value">12</span> team members</span>
+              </div>
+              <div class="meta-item">
+                <span>📅</span>
+                <span>Founded <span class="meta-value">2022</span></span>
+              </div>
+              <div class="meta-item">
+                <span>💰</span>
+                <span>Series <span class="meta-value">A</span></span>
+              </div>
+            </div>
+            <div class="tags">
+              <span class="tag">E-Commerce</span>
+              <span class="tag">Sustainability</span>
+              <span class="tag">B2B</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Traction Metrics -->
+        <div class="section">
+          <h3 class="section-title">📊 Traction</h3>
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-value">125K</div>
+              <div class="metric-label">Active Users</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value">$450K</div>
+              <div class="metric-label">Monthly Recurring Revenue</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value">45%</div>
+              <div class="metric-label">Monthly Growth Rate</div>
+            </div>
+          </div>
+          <p class="section-content">
+            We've achieved 125K active users in just 18 months, with 45%
+            month-over-month growth. Our platform has processed over $8.5M in
+            transactions from eco-conscious brands and sustainable retailers.
+          </p>
+        </div>
+
+        <!-- Business Model -->
+        <div class="section">
+          <h3 class="section-title">💼 Business Model</h3>
+          <div class="section-content">
+            <p>GreenTech Solutions operates on a commission-based model:</p>
+            <ul
+              style="margin-left: 1.5rem; margin-top: 0.75rem; line-height: 2"
+            >
+              <li>
+                <strong>Seller Commission:</strong> 3-5% on all transactions
+                (based on volume)
+              </li>
+              <li>
+                <strong>Buyer Fees:</strong> Micro-premium (0.5%) for express
+                delivery
+              </li>
+              <li>
+                <strong>Premium Memberships:</strong> $99/month for sellers with
+                advanced analytics
+              </li>
+              <li>
+                <strong>API Access:</strong> Custom pricing for enterprise
+                integrations
+              </li>
+            </ul>
+            <p style="margin-top: 1rem">
+              Current MRR breakdown: 70% from seller commissions, 20% from
+              memberships, 10% from other sources.
+            </p>
+          </div>
+        </div>
+
+        <!-- Market & Competition -->
+        <div class="section">
+          <h3 class="section-title">🎯 Market Opportunity</h3>
+          <div class="section-content">
+            <p>
+              <strong>Total Addressable Market (TAM):</strong> $180 Billion in
+              global sustainable goods market
+            </p>
+            <p style="margin-top: 0.75rem">
+              <strong>Growth Rate:</strong> The sustainable e-commerce market is
+              growing at 20% CAGR, while traditional e-commerce grows at only 8%
+            </p>
+            <p style="margin-top: 0.75rem">
+              <strong>Competitive Advantage:</strong> We're the first platform
+              combining AI-powered matching (connecting sustainable brands with
+              eco-conscious buyers) with carbon footprint tracking and
+              blockchain-verified sustainability claims.
+            </p>
+          </div>
+        </div>
+
+        <!-- Use of Funds -->
+        <div class="section">
+          <h3 class="section-title">💳 Use of Funds</h3>
+          <p class="section-content" style="margin-bottom: 1rem">
+            We're raising $2M in Series A to accelerate growth:
+          </p>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              gap: 1rem;
+            "
+          >
+            <div
+              style="
+                background-color: #eff6ff;
+                padding: 1rem;
+                border-radius: 0.5rem;
+              "
+            >
+              <div
+                style="
+                  font-weight: 700;
+                  color: var(--primary-blue);
+                  margin-bottom: 0.25rem;
+                "
+              >
+                40% - Product & Engineering
+              </div>
+              <div style="font-size: 0.9rem; color: var(--text-light)">
+                AI/ML for personalization
+              </div>
+            </div>
+            <div
+              style="
+                background-color: #eff6ff;
+                padding: 1rem;
+                border-radius: 0.5rem;
+              "
+            >
+              <div
+                style="
+                  font-weight: 700;
+                  color: var(--primary-blue);
+                  margin-bottom: 0.25rem;
+                "
+              >
+                30% - Sales & Marketing
+              </div>
+              <div style="font-size: 0.9rem; color: var(--text-light)">
+                Geographic expansion
+              </div>
+            </div>
+            <div
+              style="
+                background-color: #eff6ff;
+                padding: 1rem;
+                border-radius: 0.5rem;
+              "
+            >
+              <div
+                style="
+                  font-weight: 700;
+                  color: var(--primary-blue);
+                  margin-bottom: 0.25rem;
+                "
+              >
+                20% - Operations
+              </div>
+              <div style="font-size: 0.9rem; color: var(--text-light)">
+                Compliance & partnerships
+              </div>
+            </div>
+            <div
+              style="
+                background-color: #eff6ff;
+                padding: 1rem;
+                border-radius: 0.5rem;
+              "
+            >
+              <div
+                style="
+                  font-weight: 700;
+                  color: var(--primary-blue);
+                  margin-bottom: 0.25rem;
+                "
+              >
+                10% - Working Capital
+              </div>
+              <div style="font-size: 0.9rem; color: var(--text-light)">
+                Operational runway
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team -->
+        <div class="section">
+          <h3 class="section-title">👥 Team</h3>
+          <div class="section-content">
+            <div style="display: grid; gap: 1rem">
+              <div
+                style="
+                  background-color: var(--light-gray);
+                  padding: 1rem;
+                  border-radius: 0.5rem;
+                "
+              >
+                <div style="font-weight: 700; color: var(--text-dark)">
+                  Sarah Johnson - CEO & Co-Founder
+                </div>
+                <div
+                  style="
+                    font-size: 0.9rem;
+                    color: var(--text-light);
+                    margin-top: 0.25rem;
+                  "
+                >
+                  Former VP of Product at Sustainable Ventures (Series B exit
+                  for $150M)
+                </div>
+              </div>
+              <div
+                style="
+                  background-color: var(--light-gray);
+                  padding: 1rem;
+                  border-radius: 0.5rem;
+                "
+              >
+                <div style="font-weight: 700; color: var(--text-dark)">
+                  David Chen - CTO & Co-Founder
+                </div>
+                <div
+                  style="
+                    font-size: 0.9rem;
+                    color: var(--text-light);
+                    margin-top: 0.25rem;
+                  "
+                >
+                  Ex-Google (8 years), specialized in ML systems and
+                  infrastructure
+                </div>
+              </div>
+              <div
+                style="
+                  background-color: var(--light-gray);
+                  padding: 1rem;
+                  border-radius: 0.5rem;
+                "
+              >
+                <div style="font-weight: 700; color: var(--text-dark)">
+                  Maria Rodriguez - Head of Partnerships
+                </div>
+                <div
+                  style="
+                    font-size: 0.9rem;
+                    color: var(--text-light);
+                    margin-top: 0.25rem;
+                  "
+                >
+                  Former Director of Strategic Partnerships at Major Retailer
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pitch Deck & Documents -->
+        <div class="section">
+          <h3 class="section-title">📄 Pitch Materials</h3>
+          <div class="pitch-section">
+            <div
+              style="
+                margin-bottom: 1rem;
+                font-weight: 600;
+                color: var(--text-dark);
+              "
+            >
+              Financial Projections
+            </div>
+            <div class="file-row">
+              <div class="file-icon">📊</div>
+              <div class="file-info">
+                <div class="file-name">
+                  GreenTech_FinancialProjections_2024.xlsx
+                </div>
+                <div class="file-size">2.4 MB • Updated 3 days ago</div>
+              </div>
+              <button class="btn btn-outline btn-sm">Download</button>
+            </div>
+
+            <div
+              style="
+                margin: 1.5rem 0 1rem;
+                font-weight: 600;
+                color: var(--text-dark);
+              "
+            >
+              Business Plan & Pitch Deck
+            </div>
+            <div class="file-row">
+              <div class="file-icon">🎬</div>
+              <div class="file-info">
+                <div class="file-name">GreenTech_PitchDeck_SeriesA.pdf</div>
+                <div class="file-size">5.8 MB • Updated 1 week ago</div>
+              </div>
+              <button class="btn btn-outline btn-sm">Download</button>
+            </div>
+
+            <div class="file-row">
+              <div class="file-icon">📋</div>
+              <div class="file-info">
+                <div class="file-name">GreenTech_BusinessPlan_2024.pdf</div>
+                <div class="file-size">3.2 MB • Updated 1 week ago</div>
+              </div>
+              <button class="btn btn-outline btn-sm">Download</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="button-row">
+          <button class="btn btn-primary">💬 Contact Founder</button>
+          <button class="btn btn-outline">⭐ Save Startup</button>
+          <button class="btn btn-outline">📊 View Full Metrics</button>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Funding Info -->
+        <div class="sidebar-card">
+          <div class="card-title">💰 Investment Opportunity</div>
+          <div class="funding-badge">Seeking: $2,000,000</div>
+          <div class="funding-label">Funding Stage</div>
+          <div
+            style="
+              font-weight: 700;
+              color: var(--text-dark);
+              margin-bottom: 1rem;
+            "
+          >
+            Series A
+          </div>
+
+          <div class="funding-label" style="margin-top: 1rem">
+            Equity Offered
+          </div>
+          <div
+            style="
+              font-weight: 700;
+              color: var(--text-dark);
+              margin-bottom: 1.5rem;
+            "
+          >
+            18% (at $11M pre-money valuation)
+          </div>
+
+          <div class="funding-label">Minimum Investment</div>
+          <div style="font-weight: 700; color: var(--text-dark)">$250,000</div>
+        </div>
+
+        <!-- Investor Requirements -->
+        <div class="sidebar-card">
+          <div class="card-title">📋 Requirements</div>
+          <div
+            style="
+              font-size: 0.9rem;
+              color: var(--text-light);
+              line-height: 1.8;
+            "
+          >
+            <p>✓ Accredited investor only</p>
+            <p>✓ 4-year lock-up period</p>
+            <p>✓ Board seat for leads >$1M</p>
+            <p>✓ Standard SAFE agreement</p>
+          </div>
+        </div>
+
+        <!-- Founder Info -->
+        <div class="sidebar-card">
+          <div class="card-title">👤 Founder Contact</div>
+          <div class="founder-card">
+            <div class="founder-name">Sarah Johnson</div>
+            <div class="founder-role">CEO & Co-Founder</div>
+            <div style="margin-top: 0.75rem">
+              <div style="font-size: 0.85rem; color: var(--text-light)">
+                📧 sarah@greentech.io
+              </div>
+              <div
+                style="
+                  font-size: 0.85rem;
+                  color: var(--text-light);
+                  margin-top: 0.35rem;
+                "
+              >
+                🔗 linkedin.com/in/sarahjohnson
+              </div>
+            </div>
+          </div>
+          <button
+            class="btn btn-primary contact-button"
+            style="margin-top: 1rem"
+          >
+            Send Message
+          </button>
+        </div>
+
+        <!-- Status -->
+        <div class="sidebar-card">
+          <div class="card-title">📊 Status</div>
+          <div style="font-size: 0.9rem; color: var(--text-light)">
+            <div style="margin-bottom: 0.75rem">
+              <div style="color: var(--text-dark); font-weight: 600">
+                Funding Status
+              </div>
+              <div>Active - $500K committed</div>
+            </div>
+            <div>
+              <div style="color: var(--text-dark); font-weight: 600">
+                Posted
+              </div>
+              <div>2 weeks ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Check if user is logged in - if not, redirect to login
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "login.html";
+      }
+
+      // Handle logout
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          localStorage.clear();
+          window.location.href = "../index.html";
+        });
+    </script>
+  </body>
+</html>

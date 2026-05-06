@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complete Your Profile - IdeaNest</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <style>
+      .profile-setup {
+        background-color: var(--light-gray);
+        min-height: 100vh;
+        padding: 2rem;
+      }
+
+      .profile-container {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .profile-header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .profile-header h1 {
+        margin-bottom: 0.5rem;
+      }
+
+      .profile-header p {
+        color: var(--text-light);
+      }
+
+      .progress-bar {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .progress-step {
+        flex: 1;
+        height: 3px;
+        background-color: var(--medium-gray);
+        border-radius: 2px;
+      }
+
+      .progress-step.active {
+        background-color: var(--primary-blue);
+      }
+
+      .profile-card {
+        background-color: white;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        margin-bottom: 1.5rem;
+      }
+
+      .role-selector {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .role-option {
+        border: 2px solid var(--border-color);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .role-option:hover {
+        border-color: var(--primary-blue);
+        background-color: #f0f9ff;
+      }
+
+      .role-option input {
+        display: none;
+      }
+
+      .role-option input:checked + .role-content {
+        color: var(--primary-blue);
+      }
+
+      .role-option input:checked ~ .role-check {
+        background-color: var(--primary-blue);
+        color: white;
+        border-color: var(--primary-blue);
+      }
+
+      .role-option.selected {
+        border-color: var(--primary-blue);
+        background-color: #f0f9ff;
+      }
+
+      .role-check {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 24px;
+        height: 24px;
+        border: 2px solid var(--border-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+
+      .role-content h4 {
+        margin-bottom: 0.5rem;
+      }
+
+      .role-content p {
+        font-size: 0.9rem;
+        color: var(--text-light);
+      }
+
+      .section-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--text-dark);
+      }
+
+      .skills-input {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .skill-tag {
+        background-color: #eff6ff;
+        color: var(--primary-blue);
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .skill-tag button {
+        background: none;
+        border: none;
+        color: var(--primary-blue);
+        cursor: pointer;
+        font-size: 1rem;
+        padding: 0;
+      }
+
+      .skill-input-wrapper {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .skill-input-wrapper input {
+        flex: 1;
+      }
+
+      .form-footer {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        margin-top: 2rem;
+      }
+
+      .skip-warning {
+        background-color: #fef3c7;
+        border: 1px solid #fcd34d;
+        color: #92400e;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+      }
+
+      .skip-warning strong {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .skip-warning ul {
+        margin-left: 1.5rem;
+        margin-top: 0.5rem;
+      }
+
+      .skip-warning li {
+        font-size: 0.85rem;
+        margin-bottom: 0.25rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="navbar">
+      <div class="nav-container">
+        <a href="../index.html" class="nav-brand">🚀 IdeaNest</a>
+        <div class="nav-right">
+          <span style="color: var(--text-light); font-size: 0.9rem"
+            >Welcome, John Doe</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Setup -->
+    <div class="profile-setup">
+      <div class="profile-container">
+        <!-- Header -->
+        <div class="profile-header">
+          <h1>Complete Your Profile</h1>
+          <p>Set up your profile to unlock all IdeaNest features</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+          <div class="progress-step active"></div>
+          <div class="progress-step active"></div>
+          <div class="progress-step"></div>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="profile-card">
+          <!-- Step 1: Role Selection -->
+          <div style="margin-bottom: 2rem">
+            <div class="section-title">Select Your Role</div>
+            <p
+              style="
+                color: var(--text-light);
+                margin-bottom: 1.5rem;
+                font-size: 0.95rem;
+              "
+            >
+              Choose your primary role. You can switch roles anytime from your
+              dashboard.
+            </p>
+
+            <div class="role-selector">
+              <label class="role-option selected">
+                <input type="radio" name="role" value="founder" checked />
+                <div class="role-content">
+                  <h4>💡 Founder</h4>
+                  <p>
+                    Submit ideas for feedback or seek funding for your startup
+                  </p>
+                </div>
+                <div class="role-check">✓</div>
+              </label>
+
+              <label class="role-option">
+                <input type="radio" name="role" value="investor" />
+                <div class="role-content">
+                  <h4>💰 Investor</h4>
+                  <p>
+                    Discover promising startups and invest in innovative ideas
+                  </p>
+                </div>
+                <div class="role-check"></div>
+              </label>
+
+              <label class="role-option">
+                <input type="radio" name="role" value="advisor" />
+                <div class="role-content">
+                  <h4>🎯 Advisor (Mentor)</h4>
+                  <p>Review ideas and provide expert guidance to founders</p>
+                </div>
+                <div class="role-check"></div>
+              </label>
+            </div>
+
+            <div class="alert alert-info">
+              <span style="font-size: 1rem">ℹ️</span>
+              <div>
+                <strong>Role Compatibility:</strong> You can be Founder +
+                Investor or Advisor + Investor, but NOT Founder + Advisor
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Skills/Interests -->
+          <div
+            style="
+              margin-bottom: 2rem;
+              padding-top: 2rem;
+              border-top: 1px solid var(--border-color);
+            "
+          >
+            <div class="section-title">Add Your Skills & Interests</div>
+            <p
+              style="
+                color: var(--text-light);
+                margin-bottom: 1rem;
+                font-size: 0.95rem;
+              "
+            >
+              Help others find you by adding relevant skills
+            </p>
+
+            <div class="skill-input-wrapper">
+              <input
+                type="text"
+                placeholder="e.g., AI/ML, Blockchain, Healthcare"
+                id="skillInput"
+              />
+              <button type="button" class="btn btn-primary btn-sm">Add</button>
+            </div>
+
+            <div class="skills-input" style="margin-top: 1rem">
+              <div class="skill-tag">
+                Product Design
+                <button type="button">×</button>
+              </div>
+              <div class="skill-tag">
+                Startup Growth
+                <button type="button">×</button>
+              </div>
+              <div class="skill-tag">
+                Tech Stack
+                <button type="button">×</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Bio -->
+          <div
+            style="padding-top: 2rem; border-top: 1px solid var(--border-color)"
+          >
+            <div class="section-title">Write Your Bio</div>
+            <p
+              style="
+                color: var(--text-light);
+                margin-bottom: 1rem;
+                font-size: 0.95rem;
+              "
+            >
+              Tell others about yourself (optional but recommended)
+            </p>
+
+            <div class="form-group">
+              <textarea
+                placeholder="Tell us about yourself, your experience, and what you're looking for..."
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Form Footer -->
+          <div class="form-footer" style="flex-direction: column-reverse">
+            <div>
+              <button
+                class="btn btn-primary"
+                style="width: 100%; justify-content: center"
+              >
+                Complete Profile
+              </button>
+              <button
+                class="btn btn-outline"
+                style="
+                  width: 100%;
+                  justify-content: center;
+                  margin-top: 0.75rem;
+                "
+              >
+                Skip for Now
+              </button>
+            </div>
+
+            <div class="skip-warning">
+              <strong>⚠️ If you skip:</strong>
+              <ul>
+                <li>✗ Cannot submit ideas or startups</li>
+                <li>✗ Cannot contact other users</li>
+                <li>✗ Cannot invest</li>
+                <li>✓ Can only browse ideas</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Check if user is logged in - if not, redirect to login
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "login.html";
+      }
+
+      // Check if profile already complete - redirect to dashboard
+      if (localStorage.getItem("userProfile") === "complete") {
+        const userRole = localStorage.getItem("userRole");
+        if (userRole === "founder") {
+          window.location.href = "founder-dashboard.html";
+        } else if (userRole === "advisor") {
+          window.location.href = "advisor-dashboard.html";
+        } else if (userRole === "investor") {
+          window.location.href = "investor-dashboard.html";
+        }
+      }
+
+      // Role selection toggle
+      document.querySelectorAll(".role-option input").forEach((radio) => {
+        radio.addEventListener("change", function () {
+          document.querySelectorAll(".role-option").forEach((option) => {
+            option.classList.remove("selected");
+          });
+          this.parentElement.classList.add("selected");
+        });
+      });
+
+      // Handle Complete Profile button
+      document
+        .querySelectorAll(".btn")[0]
+        .addEventListener("click", function () {
+          const selectedRole = document.querySelector(
+            'input[name="role"]:checked',
+          ).value;
+          const skills = document.querySelector(
+            'input[placeholder="Add skills"]',
+          ).value;
+          const bio = document.querySelector("textarea").value;
+
+          // Store profile data
+          localStorage.setItem("userProfile", "complete");
+          localStorage.setItem("userRole", selectedRole);
+          localStorage.setItem("userSkills", skills);
+          localStorage.setItem("userBio", bio);
+
+          // Redirect to appropriate dashboard based on role
+          if (selectedRole === "founder") {
+            window.location.href = "founder-dashboard.html";
+          } else if (selectedRole === "advisor") {
+            window.location.href = "advisor-dashboard.html";
+          } else if (selectedRole === "investor") {
+            window.location.href = "investor-dashboard.html";
+          }
+        });
+
+      // Handle Skip for Now button
+      document
+        .querySelectorAll(".btn")[1]
+        .addEventListener("click", function () {
+          // Store limited profile (skip status)
+          localStorage.setItem("userProfile", "skipped");
+          localStorage.setItem("userRole", "limited");
+
+          // Redirect to dashboard with limited access
+          window.location.href = "founder-dashboard.html?limited=true";
+        });
+    </script>
+  </body>
+</html>

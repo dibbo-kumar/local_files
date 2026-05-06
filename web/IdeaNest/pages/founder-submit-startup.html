@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Startup for Funding - IdeaNest</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <style>
+      .dashboard-container {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: 100vh;
+        background-color: var(--light-gray);
+      }
+
+      .sidebar {
+        background-color: var(--white);
+        border-right: 1px solid var(--border-color);
+        padding: 1.5rem 0;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
+        overflow-y: auto;
+      }
+
+      .sidebar-header {
+        padding: 0 1.5rem 2rem;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 1rem;
+      }
+
+      .sidebar-brand {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+      }
+
+      .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.5rem;
+        color: var(--text-dark);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .sidebar-link:hover {
+        background-color: var(--light-gray);
+        color: var(--primary-blue);
+        padding-left: 2rem;
+      }
+
+      .sidebar-link.active {
+        background-color: #eff6ff;
+        color: var(--primary-blue);
+        border-left: 3px solid var(--primary-blue);
+        padding-left: 1.5rem;
+      }
+
+      .main-content {
+        margin-left: 250px;
+        padding: 2rem;
+      }
+
+      .form-container {
+        max-width: 800px;
+        background-color: white;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border-color);
+        padding: 2rem;
+      }
+
+      .form-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .form-header h1 {
+        margin-bottom: 0.5rem;
+        color: var(--text-dark);
+      }
+
+      .mode-indicator {
+        display: inline-block;
+        background-color: #dcfce7;
+        color: #166534;
+        padding: 0.5rem 1rem;
+        border-radius: 0.4rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .form-section {
+        margin-bottom: 2rem;
+      }
+
+      .form-section-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--text-dark);
+      }
+
+      .section-description {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .funding-input {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .funding-input input {
+        flex: 1;
+      }
+
+      .currency-selector {
+        background-color: var(--light-gray);
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+        font-weight: 600;
+        color: var(--text-dark);
+      }
+
+      .stage-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1rem;
+      }
+
+      .stage-option {
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .stage-option:hover {
+        border-color: var(--primary-blue);
+        background-color: #f0f9ff;
+      }
+
+      .stage-option input {
+        display: none;
+      }
+
+      .stage-option.selected {
+        border-color: var(--primary-blue);
+        background-color: #eff6ff;
+        color: var(--primary-blue);
+      }
+
+      .form-group-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .form-footer {
+        display: flex;
+        gap: 1rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+        justify-content: space-between;
+      }
+
+      .progress-indicator {
+        background-color: #f0f9ff;
+        border: 1px solid #bae6fd;
+        color: #0c4a6e;
+        padding: 1rem;
+        border-radius: 0.75rem;
+        margin-bottom: 2rem;
+        font-size: 0.9rem;
+      }
+
+      .progress-steps {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      .progress-step-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .progress-step-item.active {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">🚀 IdeaNest</div>
+      </div>
+      <ul class="sidebar-menu">
+        <li>
+          <a href="founder-dashboard.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">📊</span> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="founder-submit-idea.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">💡</span> Submit Idea (Review)
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-link active">
+            <span style="font-size: 1.2rem">🚀</span> Submit Startup (Funding)
+          </a>
+        </li>
+        <li>
+          <a href="founder-ideas.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">📝</span> My Ideas
+          </a>
+        </li>
+        <li>
+          <a href="chat.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">💬</span> Messages
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="form-container">
+        <!-- Header -->
+        <div class="form-header">
+          <div class="mode-indicator">💰 Investment Mode</div>
+          <h1>Submit Your Startup for Funding</h1>
+          <p>
+            Find investors and raise capital for your startup. Only investors
+            will see these posts.
+          </p>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="progress-indicator">
+          <div class="progress-steps">
+            <div class="progress-step-item active">
+              <span>1️⃣ Company Details</span>
+            </div>
+            <span>→</span>
+            <div class="progress-step-item">
+              <span>2️⃣ Funding Info</span>
+            </div>
+            <span>→</span>
+            <div class="progress-step-item">
+              <span>3️⃣ Business Plan</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <form>
+          <!-- Section 1: Company Info -->
+          <div class="form-section">
+            <div class="form-section-title">🏢 Company Information</div>
+            <div class="section-description">
+              Tell investors about your startup
+            </div>
+
+            <div class="form-group">
+              <label>Company Name *</label>
+              <input type="text" placeholder="Your startup name" required />
+            </div>
+
+            <div class="form-group">
+              <label>Company Tagline *</label>
+              <input
+                type="text"
+                placeholder="e.g., AI-powered learning for everyone"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Industry *</label>
+              <select required>
+                <option value="">Select industry</option>
+                <option>Technology</option>
+                <option>Healthcare</option>
+                <option>E-Commerce</option>
+                <option>Finance/FinTech</option>
+                <option>Education</option>
+                <option>SaaS</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="form-group-row">
+              <div class="form-group">
+                <label>Founded Date</label>
+                <input type="date" />
+              </div>
+              <div class="form-group">
+                <label>Team Size</label>
+                <select>
+                  <option>Select team size</option>
+                  <option>1-2</option>
+                  <option>3-5</option>
+                  <option>6-10</option>
+                  <option>10+</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Funding Details -->
+          <div class="form-section">
+            <div class="form-section-title">💵 Funding Requirements</div>
+            <div class="section-description">How much are you raising?</div>
+
+            <div class="form-group">
+              <label>Funding Amount Seeking *</label>
+              <div class="funding-input">
+                <span class="currency-selector">$</span>
+                <input type="number" placeholder="0" required />
+              </div>
+              <small style="color: var(--text-light)">USD</small>
+            </div>
+
+            <div class="form-group">
+              <label>Funding Stage *</label>
+              <div class="stage-options">
+                <label class="stage-option selected">
+                  <input type="radio" name="stage" value="seed" checked />
+                  <span style="cursor: pointer">🌱<br />Seed</span>
+                </label>
+                <label class="stage-option">
+                  <input type="radio" name="stage" value="series-a" />
+                  <span style="cursor: pointer">📈<br />Series A</span>
+                </label>
+                <label class="stage-option">
+                  <input type="radio" name="stage" value="series-b" />
+                  <span style="cursor: pointer">🚀<br />Series B</span>
+                </label>
+                <label class="stage-option">
+                  <input type="radio" name="stage" value="series-c" />
+                  <span style="cursor: pointer">🎯<br />Series C+</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>How Will You Use These Funds?</label>
+              <textarea
+                placeholder="e.g., Product development (40%), Marketing (30%), Team expansion (30%)..."
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Equity Offered (%)</label>
+              <input
+                type="number"
+                placeholder="e.g., 10-15%"
+                step="0.1"
+                min="0"
+                max="100"
+              />
+            </div>
+          </div>
+
+          <!-- Section 3: Business Plan -->
+          <div class="form-section">
+            <div class="form-section-title">📊 Business Plan</div>
+            <div class="section-description">Market and financial details</div>
+
+            <div class="form-group">
+              <label>Market Size / Opportunity *</label>
+              <textarea
+                placeholder="Total addressable market (TAM) and your target segment..."
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Business Model *</label>
+              <textarea
+                placeholder="How do you make money? Subscription, freemium, licensing, etc..."
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Traction & Milestones</label>
+              <textarea
+                placeholder="Users, revenue, partnerships, awards, or any key achievements..."
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Competitive Advantage</label>
+              <textarea
+                placeholder="What makes you different from competitors?"
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Financial Projections</label>
+              <input type="file" accept=".pdf,.xlsx,.xls" />
+              <small style="color: var(--text-light)"
+                >Upload revenue projections (PDF or Excel)</small
+              >
+            </div>
+
+            <div class="form-group">
+              <label>Business Plan / Pitch Deck</label>
+              <input type="file" accept=".pdf,.ppt,.pptx" />
+              <small style="color: var(--text-light)"
+                >Upload your full business plan or pitch deck</small
+              >
+            </div>
+          </div>
+
+          <!-- Section 4: Contact Info -->
+          <div class="form-section">
+            <div class="form-section-title">📧 Contact Information</div>
+            <div class="section-description">How investors can reach you</div>
+
+            <div class="form-group-row">
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" value="founder@company.com" required />
+              </div>
+              <div class="form-group">
+                <label>Phone</label>
+                <input type="tel" placeholder="+1 (555) 000-0000" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>LinkedIn Profile</label>
+              <input
+                type="url"
+                placeholder="https://linkedin.com/in/yourprofile"
+              />
+            </div>
+          </div>
+
+          <!-- Form Footer -->
+          <div class="form-footer">
+            <button type="button" class="btn btn-outline">Save as Draft</button>
+            <div>
+              <button type="button" class="btn btn-outline">Cancel</button>
+              <button type="submit" class="btn btn-primary">
+                Submit for Funding
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Info Box -->
+        <div class="alert alert-success" style="margin-top: 2rem">
+          <span style="font-size: 1rem">✓</span>
+          <div>
+            <strong>Visibility:</strong> Only registered investors will be able
+            to see your startup post. Your profile will appear in investor
+            search results.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Check if user is logged in - if not, redirect to login
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "login.html";
+      }
+
+      // Stage selection
+      document.querySelectorAll(".stage-option input").forEach((radio) => {
+        radio.addEventListener("change", function () {
+          document.querySelectorAll(".stage-option").forEach((opt) => {
+            opt.classList.remove("selected");
+          });
+          this.parentElement.classList.add("selected");
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1 @@
+    // scanf("%s %s %s", cricketer[i].name, cricketer[i].country, cricketer[i].type);

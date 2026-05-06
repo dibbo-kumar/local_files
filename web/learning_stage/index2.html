@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>css level 1</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="left">
+      <div class="lefttitle">UIU Learning Hub</div>
+      <div class="options">
+        <a class="item-clicked" href="#">Dashboard</a>
+        <a class="item" href="#">My course</a>
+        <a class="item" href="#">Assignment</a>
+        <a class="item" href="#">Exams</a>
+      </div>
+    </div>
+    <div class="right">
+      <div class="topbar">
+        <div class="title">Welcome to learning dashboard</div>
+        <div class="search">
+          <input type="text" placeholder="search courses" />
+        </div>
+      </div>
+      <div class="course-grid">
+        <div class="course-card">
+          <div class="course-top">
+            <div class="course-title">Cse 4165: Web Programming</div>
+            <div class="course-teacher">Prof. Rahman</div>
+          </div>
+          <div class="course-lower">
+            <div class="bar">
+              <progress value="75" max="100" style="color: lime"></progress>
+            </div>
+            <div class="details">
+              <div class="progress">progress:75%</div>
+              <div class="grade">Grade : A</div>
+            </div>
+          </div>
+        </div>
+        <div class="course-card">
+          <div class="course-top">
+            <div class="course-title">Cse 3115: database system</div>
+            <div class="course-teacher">ddr. karim</div>
+          </div>
+          <div class="course-lower">
+            <div class="bar">
+              <progress
+                value="45"
+                max="100"
+                style="color: rgb(165, 17, 143)"
+              ></progress>
+            </div>
+            <div class="details">
+              <div class="progress">progress:45%</div>
+              <div class="grade">Grade : B+</div>
+            </div>
+          </div>
+        </div>
+        <div class="course-card">
+          <div class="course-top">
+            <div class="course-title">Cse 3412: algorithms</div>
+            <div class="course-teacher">Prof. ahmed</div>
+          </div>
+          <div class="course-lower">
+            <div class="bar">
+              <progress value="90" max="100" style="color: lime"></progress>
+            </div>
+            <div class="details">
+              <div class="progress">progress:90%</div>
+              <div class="grade">Grade : A+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="upcoming">
+        <div class="upcoming-title">Upcoming class and deadlines</div>
+        <div class="upcoming-grid">
+          <div class="upcoming-grid1">
+            <div class="up-time">Today: 11am</div>
+            <div class="up-title">Web programming</div>
+            <div class="pill">lecture</div>
+          </div>
+          <div class="upcoming-grid2">
+            <div class="up-time">tomorrow: 11am</div>
+            <div class="up-title">database quiz</div>
+            <div class="pill">assessment</div>
+          </div>
+          <div class="upcoming-grid3">
+            <div class="up-time">april 6</div>
+            <div class="up-title">algo lab</div>
+            <div class="pill">practical</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

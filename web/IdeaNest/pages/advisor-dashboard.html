@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advisor Dashboard - IdeaNest</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <style>
+      .dashboard-container {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: 100vh;
+        background-color: var(--light-gray);
+      }
+
+      .sidebar {
+        background-color: var(--white);
+        border-right: 1px solid var(--border-color);
+        padding: 1.5rem 0;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
+        overflow-y: auto;
+      }
+
+      .sidebar-header {
+        padding: 0 1.5rem 2rem;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 1rem;
+      }
+
+      .sidebar-brand {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+      }
+
+      .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.5rem;
+        color: var(--text-dark);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .sidebar-link:hover {
+        background-color: var(--light-gray);
+        color: var(--primary-blue);
+        padding-left: 2rem;
+      }
+
+      .sidebar-link.active {
+        background-color: #eff6ff;
+        color: var(--primary-blue);
+        border-left: 3px solid var(--primary-blue);
+        padding-left: 1.5rem;
+      }
+
+      .main-content {
+        margin-left: 250px;
+        padding: 2rem;
+      }
+
+      .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      .dashboard-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+
+      .role-badge {
+        background-color: #eff6ff;
+        color: var(--primary-blue);
+        padding: 0.5rem 1rem;
+        border-radius: 0.4rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .filter-section {
+        background-color: white;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border-color);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        align-items: end;
+      }
+
+      .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .filter-group label {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--text-dark);
+      }
+
+      .filter-group input,
+      .filter-group select {
+        padding: 0.65rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background-color: white;
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .ideas-container {
+        background-color: white;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border-color);
+        padding: 2rem;
+      }
+
+      .ideas-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .idea-card {
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .idea-card:hover {
+        border-color: var(--primary-blue);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .idea-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+      }
+
+      .idea-meta {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        color: var(--text-light);
+      }
+
+      .idea-category {
+        display: inline-block;
+        background-color: #dbeafe;
+        color: #0c4a6e;
+        padding: 0.35rem 0.75rem;
+        border-radius: 0.4rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+      }
+
+      .idea-excerpt {
+        color: var(--text-light);
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+
+      .idea-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .idea-stats {
+        display: flex;
+        gap: 1rem;
+        font-size: 0.9rem;
+        color: var(--text-light);
+      }
+
+      .idea-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .rating-display {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .stars {
+        color: #fcd34d;
+      }
+
+      .priority-badge {
+        background-color: #fef3c7;
+        color: #92400e;
+        padding: 0.35rem 0.75rem;
+        border-radius: 0.4rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: var(--text-light);
+      }
+
+      .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      @media (max-width: 768px) {
+        .dashboard-container {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          display: none;
+        }
+
+        .main-content {
+          margin-left: 0;
+        }
+
+        .filter-section {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">🚀 IdeaNest</div>
+      </div>
+      <ul class="sidebar-menu">
+        <li>
+          <a href="#" class="sidebar-link active">
+            <span style="font-size: 1.2rem">📊</span> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-link">
+            <span style="font-size: 1.2rem">💬</span> Messages
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-link">
+            <span style="font-size: 1.2rem">⭐</span> My Reviews
+          </a>
+        </li>
+        <li>
+          <hr
+            style="
+              border: none;
+              border-top: 1px solid var(--border-color);
+              margin: 1rem 0;
+            "
+          />
+        </li>
+        <li>
+          <a href="#" class="sidebar-link">
+            <span style="font-size: 1.2rem">⚙️</span> Settings
+          </a>
+        </li>
+        <li>
+          <a href="../index.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">🚪</span> Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">Advisor Dashboard</h1>
+        <span class="role-badge">🎯 Advisor / Mentor</span>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">24</div>
+          <div class="stat-label">Ideas to Review</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">18</div>
+          <div class="stat-label">Reviews Completed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">4.8</div>
+          <div class="stat-label">Average Rating</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">7</div>
+          <div class="stat-label">Active Chats</div>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="filter-section">
+        <div class="filter-group">
+          <label>Category</label>
+          <select>
+            <option value="">All Categories</option>
+            <option>Technology</option>
+            <option>Healthcare</option>
+            <option>E-Commerce</option>
+            <option>Finance</option>
+            <option>Education</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Sort By</label>
+          <select>
+            <option>Newest First</option>
+            <option>Most Popular</option>
+            <option>Highest Rated</option>
+            <option>Awaiting Review</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Priority</label>
+          <select>
+            <option value="">All</option>
+            <option>High</option>
+            <option>Medium</option>
+            <option>Low</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-sm">Apply Filters</button>
+      </div>
+
+      <!-- Ideas to Review -->
+      <div class="ideas-container">
+        <div class="ideas-header">
+          <h2 style="margin: 0; font-size: 1.4rem">Ideas Awaiting Review</h2>
+          <span style="color: var(--text-light); font-size: 0.9rem"
+            >Showing 8 of 24</span
+          >
+        </div>
+
+        <!-- Idea Card 1 -->
+        <div class="idea-card">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: start;
+              margin-bottom: 0.75rem;
+            "
+          >
+            <div>
+              <div class="idea-title">AI-Powered Learning Platform</div>
+              <div class="idea-category">💻 Technology</div>
+            </div>
+            <div class="priority-badge">🔥 High Priority</div>
+          </div>
+          <div class="idea-meta">
+            <span>👤 John Doe</span>
+            <span>📅 Submitted 2 days ago</span>
+            <span>👁️ 145 views</span>
+          </div>
+          <div class="idea-excerpt">
+            A personalized learning platform using AI to adapt content based on
+            user learning patterns and preferences. Students can learn at their
+            own pace...
+          </div>
+          <div class="idea-footer">
+            <div class="idea-stats">
+              <span>⭐ Pending first review</span>
+            </div>
+            <div class="idea-actions">
+              <a href="idea-details.html" class="btn btn-primary btn-sm"
+                >Review Idea</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Idea Card 2 -->
+        <div class="idea-card">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: start;
+              margin-bottom: 0.75rem;
+            "
+          >
+            <div>
+              <div class="idea-title">Healthcare Telemedicine App</div>
+              <div class="idea-category">🏥 Healthcare</div>
+            </div>
+          </div>
+          <div class="idea-meta">
+            <span>👤 Sarah Johnson</span>
+            <span>📅 Submitted 5 days ago</span>
+            <span>👁️ 234 views</span>
+          </div>
+          <div class="idea-excerpt">
+            Mobile application connecting patients with licensed doctors for
+            virtual consultations, prescription management, and medical
+            records...
+          </div>
+          <div class="idea-footer">
+            <div class="idea-stats">
+              <div class="rating-display">
+                <span class="stars">⭐⭐⭐⭐</span>
+                <span>1 review</span>
+              </div>
+            </div>
+            <div class="idea-actions">
+              <a href="idea-details.html" class="btn btn-primary btn-sm"
+                >Add Feedback</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Idea Card 3 -->
+        <div class="idea-card">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: start;
+              margin-bottom: 0.75rem;
+            "
+          >
+            <div>
+              <div class="idea-title">Sustainable E-Commerce Platform</div>
+              <div class="idea-category">🛍️ E-Commerce</div>
+            </div>
+            <div class="priority-badge">🔥 High Priority</div>
+          </div>
+          <div class="idea-meta">
+            <span>👤 Mike Chen</span>
+            <span>📅 Submitted 1 week ago</span>
+            <span>👁️ 89 views</span>
+          </div>
+          <div class="idea-excerpt">
+            Eco-friendly online marketplace connecting sustainable brands with
+            conscious consumers. Features carbon tracking and environmental
+            impact metrics...
+          </div>
+          <div class="idea-footer">
+            <div class="idea-stats">
+              <div class="rating-display">
+                <span class="stars">⭐⭐⭐⭐⭐</span>
+                <span>3 reviews</span>
+              </div>
+            </div>
+            <div class="idea-actions">
+              <a href="idea-details.html" class="btn btn-primary btn-sm"
+                >Add Feedback</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Idea Card 4 -->
+        <div class="idea-card">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: start;
+              margin-bottom: 0.75rem;
+            "
+          >
+            <div>
+              <div class="idea-title">Fintech API for Small Businesses</div>
+              <div class="idea-category">💰 Finance</div>
+            </div>
+          </div>
+          <div class="idea-meta">
+            <span>👤 Alex Rivera</span>
+            <span>📅 Submitted 3 days ago</span>
+            <span>👁️ 167 views</span>
+          </div>
+          <div class="idea-excerpt">
+            Simplified API and dashboard for small businesses to manage
+            payments, invoicing, and financial analytics without technical
+            expertise...
+          </div>
+          <div class="idea-footer">
+            <div class="idea-stats">
+              <span>⭐ Pending first review</span>
+            </div>
+            <div class="idea-actions">
+              <a href="idea-details.html" class="btn btn-primary btn-sm"
+                >Review Idea</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- View More -->
+        <div style="text-align: center; padding: 2rem; margin-top: 1rem">
+          <button class="btn btn-outline">Load More Ideas</button>
+        </div>
+      </div>
+
+      <!-- Info Alert -->
+      <div class="alert alert-info" style="margin-top: 2rem">
+        <span style="font-size: 1rem">ℹ️</span>
+        <div>
+          <strong>Tip:</strong> You can rate ideas and provide detailed
+          feedback. Founders use your insights to improve their concepts. Your
+          reviews help build your reputation as a mentor!
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Check if user is logged in - if not, redirect to login
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "login.html";
+      }
+
+      // Check if user needs to complete profile
+      if (
+        localStorage.getItem("userProfile") !== "complete" &&
+        localStorage.getItem("userProfile") !== "skipped"
+      ) {
+        window.location.href = "profile-setup.html";
+      }
+
+      // Handle logout
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          localStorage.clear();
+          window.location.href = "../index.html";
+        });
+    </script>
+  </body>
+</html>

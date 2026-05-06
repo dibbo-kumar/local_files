@@ -1,0 +1,134 @@
+body{
+    display: flex;
+    flex-direction: row;
+}
+
+.left{
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    background: navy;
+    color: white;
+}
+.navHead{
+    padding: 15px;
+    text-align: center;
+    background-color: rgba(3, 158, 241, 0.363);
+}
+.nav{
+    display: flex;
+    flex-direction: column;
+    /* padding: 10px; */
+}
+.nav-item{
+    color: white;
+    text-decoration: none;
+    /* text-decoration used for underlining */
+    padding: 10px;
+}
+.nav-item.clicked{
+    background-color: rgba(109, 109, 249, 0.367);
+    border-left: 5px solid white;
+}
+
+.right{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: rgb(247, 246, 246);
+    padding: 15px;
+}
+
+.topbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.title{
+    font-size: 24px;
+    font-weight: bold;
+}
+.search input{
+    width: 300px;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 100px;
+}
+
+.course-grid{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+    margin-bottom: 35px;
+    margin-top: 10px;
+
+}
+.course-card{
+    background-color: white;
+    box-shadow: 2px 2px 15px lightgray;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.course-top{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100px;
+    padding: 15px;
+    background: linear-gradient(to right, maroon, lightgreen);
+    color: white;
+}
+.course-title{
+    font-weight: bold;
+}
+.course-teacher{
+    font-size: 12px;
+}
+.course-lower{
+    padding: 15px;
+}
+.bar progress{
+    width: 100%;
+    accent-color: lime;
+}
+.details{
+    display: flex;
+    justify-content: space-between;
+}
+.upcoming{
+    background-color: white;
+    box-shadow: 2px 2px 15px lightgray;
+    border-radius: 20px;
+    padding: 15px;
+}
+.upcoming-title{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.upcoming-grid{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+}
+.upcoming-card{
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(gray, orange);
+    height: 80px;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 15px;
+    color: white;
+}
+.up-title{
+    font-size: 18px;
+    font-weight: bold;
+}
+.pill{
+    font-size: 11px;
+    background: rgba(232, 232, 232, 0.267);
+    padding: 6px;
+    align-self: flex-start;
+    border-radius: 10px;
+}

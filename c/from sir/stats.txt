@@ -1,0 +1,3 @@
+Most goals scored: Team1 8
+Least goals conceded: Team1 2
+Most minutes played: John Team1 90

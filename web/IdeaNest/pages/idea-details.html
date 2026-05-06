@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Idea Details - IdeaNest</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <style>
+      .details-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .navbar {
+        background-color: var(--white);
+        border-bottom: 1px solid var(--border-color);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      .nav-brand {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        text-decoration: none;
+      }
+
+      .back-button {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary-blue);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .idea-header {
+        background-color: white;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border-color);
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .idea-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--text-dark);
+      }
+
+      .idea-meta {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+        color: var(--text-light);
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .idea-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .badge-category {
+        display: inline-block;
+        background-color: #dbeafe;
+        color: #0c4a6e;
+        padding: 0.5rem 1rem;
+        border-radius: 0.4rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .badge-status {
+        display: inline-block;
+        background-color: #dcfce7;
+        color: #166534;
+        padding: 0.5rem 1rem;
+        border-radius: 0.4rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .author-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background-color: var(--light-gray);
+        border-radius: 0.5rem;
+        margin: 1.5rem 0;
+      }
+
+      .author-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+
+      .author-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .author-name {
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+
+      .author-role {
+        font-size: 0.85rem;
+        color: var(--text-light);
+      }
+
+      .contact-button {
+        margin-left: auto;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .content-main {
+        background-color: white;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border-color);
+        padding: 2rem;
+      }
+
+      .content-section {
+        margin-bottom: 2rem;
+      }
+
+      .content-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .content-section h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--text-dark);
+      }
+
+      .content-section p {
+        color: var(--text-light);
+        line-height: 1.8;
+        margin-bottom: 0.75rem;
+      }
+
+      .content-section ul {
+        list-style-position: inside;
+        color: var(--text-light);
+        line-height: 1.8;
+      }
+
+      .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .sidebar-card {
+        background-color: white;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border-color);
+        padding: 1.5rem;
+      }
+
+      .sidebar-card h4 {
+        margin-bottom: 1rem;
+        color: var(--text-dark);
+      }
+
+      .rating-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .rating-display {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .stars {
+        font-size: 1.5rem;
+      }
+
+      .rating-text {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .rating-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+      }
+
+      .rating-count {
+        color: var(--text-light);
+        font-size: 0.9rem;
+      }
+
+      .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .action-buttons button {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .feedback-section {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .feedback-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .feedback-item {
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        background-color: var(--light-gray);
+      }
+
+      .feedback-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .feedback-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: var(--primary-blue);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+      }
+
+      .feedback-name {
+        font-weight: 600;
+        color: var(--text-dark);
+      }
+
+      .feedback-time {
+        color: var(--text-light);
+        font-size: 0.85rem;
+        margin-left: auto;
+      }
+
+      .feedback-stars {
+        color: #fcd34d;
+        font-size: 0.9rem;
+      }
+
+      .feedback-content {
+        color: var(--text-light);
+        line-height: 1.6;
+      }
+
+      .feedback-form {
+        margin-top: 1.5rem;
+        padding: 1.5rem;
+        background-color: white;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+      }
+
+      .feedback-form h4 {
+        margin-bottom: 1rem;
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .star-input {
+        display: flex;
+        gap: 0.25rem;
+        margin-bottom: 1rem;
+      }
+
+      .star-input button {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #d1d5db;
+        transition: color 0.3s ease;
+      }
+
+      .star-input button:hover,
+      .star-input button.active {
+        color: #fcd34d;
+      }
+
+      .form-group textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        font-family: inherit;
+        min-height: 100px;
+        font-size: 0.95rem;
+        resize: vertical;
+      }
+
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      .form-footer {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+      }
+
+      @media (max-width: 768px) {
+        .content-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .navbar {
+          padding: 1rem 1.5rem;
+        }
+
+        .details-container {
+          padding: 1rem;
+        }
+
+        .idea-header {
+          padding: 1.5rem;
+        }
+
+        .content-main {
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="navbar">
+      <div class="nav-container">
+        <a href="../index.html" class="nav-brand">🚀 IdeaNest</a>
+        <a href="founder-dashboard.html" class="back-button"
+          >← Back to Dashboard</a
+        >
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="details-container">
+      <!-- Idea Header -->
+      <div class="idea-header">
+        <div class="idea-meta">
+          <span class="badge-category">💻 Technology</span>
+          <span class="badge-status">✓ Idea Review</span>
+        </div>
+        <h1 class="idea-title">AI-Powered Learning Platform</h1>
+
+        <div class="idea-meta" style="margin-bottom: 0">
+          <div class="idea-meta-item">📅 Submitted 2 days ago</div>
+          <div class="idea-meta-item">👁️ 145 views</div>
+          <div class="idea-meta-item">💬 8 feedbacks</div>
+          <div class="idea-meta-item">⭐ 4.5 rating</div>
+        </div>
+
+        <!-- Author Info -->
+        <div class="author-info">
+          <div class="author-avatar">JD</div>
+          <div class="author-details">
+            <div class="author-name">John Doe</div>
+            <div class="author-role">Founder • Product Designer</div>
+          </div>
+          <button class="btn btn-primary btn-sm contact-button">
+            Contact Founder
+          </button>
+        </div>
+      </div>
+
+      <!-- Content Grid -->
+      <div class="content-grid">
+        <!-- Main Content -->
+        <div class="content-main">
+          <!-- Problem Section -->
+          <div class="content-section">
+            <h3>🔍 The Problem</h3>
+            <p>
+              Traditional online learning platforms use one-size-fits-all
+              approaches that don't adapt to individual learning styles.
+              Students struggle with:
+            </p>
+            <ul style="margin-top: 0.5rem">
+              <li>
+                Fixed pacing that's too fast or too slow for different learners
+              </li>
+              <li>Irrelevant content recommendations</li>
+              <li>High dropout rates due to lack of personalization</li>
+              <li>Limited real-time feedback on understanding</li>
+            </ul>
+          </div>
+
+          <!-- Solution Section -->
+          <div class="content-section">
+            <h3>💡 Our Solution</h3>
+            <p>
+              We've built an AI-powered learning platform that personalizes the
+              learning experience for each student. Our system:
+            </p>
+            <ul style="margin-top: 0.5rem">
+              <li>
+                Analyzes learning patterns to adapt content difficulty and pace
+              </li>
+              <li>Provides real-time recommendations based on performance</li>
+              <li>
+                Uses predictive analytics to identify at-risk students early
+              </li>
+              <li>Offers interactive exercises with instant feedback</li>
+              <li>Generates personalized learning paths for each student</li>
+            </ul>
+          </div>
+
+          <!-- Target Audience Section -->
+          <div class="content-section">
+            <h3>🎯 Target Audience</h3>
+            <p>
+              K-12 educators and institutions looking to improve student
+              outcomes while reducing administrative burden. We're also
+              targeting adult learners in corporate training and professional
+              development.
+            </p>
+          </div>
+
+          <!-- Key Features Section -->
+          <div class="content-section">
+            <h3>⭐ Key Features / USP</h3>
+            <p>What makes us unique:</p>
+            <ul style="margin-top: 0.5rem">
+              <li>
+                <strong>Advanced AI Engine:</strong> Uses machine learning to
+                continuously optimize personalization
+              </li>
+              <li>
+                <strong>Real-time Analytics:</strong> Teachers get instant
+                insights into student performance
+              </li>
+              <li>
+                <strong>Offline Support:</strong> Works even without internet
+                connection
+              </li>
+              <li>
+                <strong>Multi-language Support:</strong> Supports 15+ languages
+                globally
+              </li>
+              <li>
+                <strong>Easy Integration:</strong> Works with existing school
+                management systems
+              </li>
+            </ul>
+          </div>
+
+          <!-- Description Section -->
+          <div class="content-section">
+            <h3>📄 Additional Context</h3>
+            <p>
+              We've already piloted with 5 schools in 3 countries, reaching
+              2,000+ students. Initial results show 35% improvement in learning
+              outcomes and 25% reduction in dropout rates. We're now looking to
+              scale and expand to more regions.
+            </p>
+          </div>
+
+          <!-- Feedback Section -->
+          <div class="feedback-section">
+            <h3 style="margin-bottom: 1.5rem">💬 Feedback & Reviews (8)</h3>
+
+            <div class="feedback-list">
+              <!-- Feedback 1 -->
+              <div class="feedback-item">
+                <div class="feedback-header">
+                  <div class="feedback-avatar">SM</div>
+                  <div class="feedback-name">Sarah Miller</div>
+                  <div style="display: flex; gap: 0.25rem; align-items: center">
+                    <span class="feedback-stars">⭐⭐⭐⭐⭐</span>
+                    <span style="color: var(--text-light); font-size: 0.85rem"
+                      >Advisor</span
+                    >
+                  </div>
+                  <div class="feedback-time">1 day ago</div>
+                </div>
+                <div class="feedback-content">
+                  Excellent concept! The AI personalization angle is promising.
+                  Have you considered the regulatory challenges in different
+                  markets? That could be a key blocker.
+                </div>
+              </div>
+
+              <!-- Feedback 2 -->
+              <div class="feedback-item">
+                <div class="feedback-header">
+                  <div class="feedback-avatar">AK</div>
+                  <div class="feedback-name">Alex Kumar</div>
+                  <div style="display: flex; gap: 0.25rem; align-items: center">
+                    <span class="feedback-stars">⭐⭐⭐⭐</span>
+                    <span style="color: var(--text-light); font-size: 0.85rem"
+                      >Advisor</span
+                    >
+                  </div>
+                  <div class="feedback-time">2 days ago</div>
+                </div>
+                <div class="feedback-content">
+                  Great market opportunity and the pilot results are solid. I'd
+                  suggest thinking more about teacher adoption - change
+                  management is critical.
+                </div>
+              </div>
+
+              <!-- Feedback 3 -->
+              <div class="feedback-item">
+                <div class="feedback-header">
+                  <div class="feedback-avatar">EP</div>
+                  <div class="feedback-name">Emily Parker</div>
+                  <div style="display: flex; gap: 0.25rem; align-items: center">
+                    <span class="feedback-stars">⭐⭐⭐⭐⭐</span>
+                    <span style="color: var(--text-light); font-size: 0.85rem"
+                      >Advisor</span
+                    >
+                  </div>
+                  <div class="feedback-time">2 days ago</div>
+                </div>
+                <div class="feedback-content">
+                  Impressive solution. The 35% improvement in learning outcomes
+                  is compelling. Consider how you'll differentiate against
+                  existing players like Coursera and Udemy.
+                </div>
+              </div>
+            </div>
+
+            <!-- Feedback Form -->
+            <div class="feedback-form">
+              <h4>Share Your Feedback</h4>
+              <div class="form-group">
+                <label>Your Rating</label>
+                <div class="star-input">
+                  <button type="button" class="star-btn">☆</button>
+                  <button type="button" class="star-btn">☆</button>
+                  <button type="button" class="star-btn">☆</button>
+                  <button type="button" class="star-btn">☆</button>
+                  <button type="button" class="star-btn">☆</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Your Feedback</label>
+                <textarea
+                  placeholder="Share your thoughts, suggestions, or questions about this idea..."
+                ></textarea>
+              </div>
+
+              <div class="form-footer">
+                <button class="btn btn-outline btn-sm">Cancel</button>
+                <button class="btn btn-primary btn-sm">Submit Feedback</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <!-- Rating Card -->
+          <div class="sidebar-card">
+            <h4>📊 Idea Ratings</h4>
+            <div class="rating-section">
+              <div class="rating-display">
+                <div class="stars">⭐⭐⭐⭐☆</div>
+                <div class="rating-text">
+                  <div class="rating-value">4.5</div>
+                  <div class="rating-count">8 reviews</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feedback Tags -->
+          <div class="sidebar-card">
+            <h4>🏷️ Feedback Categories</h4>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  font-size: 0.9rem;
+                "
+              >
+                <span>Business Validation</span>
+                <span style="color: var(--primary-blue); font-weight: 600"
+                  >5/8</span
+                >
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  font-size: 0.9rem;
+                "
+              >
+                <span>Technical Feasibility</span>
+                <span style="color: var(--primary-blue); font-weight: 600"
+                  >4/8</span
+                >
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  font-size: 0.9rem;
+                "
+              >
+                <span>Market Analysis</span>
+                <span style="color: var(--primary-blue); font-weight: 600"
+                  >6/8</span
+                >
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  font-size: 0.9rem;
+                "
+              >
+                <span>Go-to-Market Strategy</span>
+                <span style="color: var(--primary-blue); font-weight: 600"
+                  >3/8</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="sidebar-card">
+            <div class="action-buttons">
+              <button class="btn btn-primary">💬 Send Message</button>
+              <button class="btn btn-secondary">❤️ Save Idea</button>
+              <button class="btn btn-outline">📤 Share</button>
+            </div>
+          </div>
+
+          <!-- Status Card -->
+          <div class="sidebar-card">
+            <h4>✓ Status</h4>
+            <div style="font-size: 0.9rem; color: var(--text-light)">
+              <p style="margin-bottom: 0.5rem">
+                <strong>Type:</strong> Idea Review
+              </p>
+              <p style="margin-bottom: 0.5rem">
+                <strong>Status:</strong> Open for feedback
+              </p>
+              <p style="margin-bottom: 0">
+                <strong>Category:</strong> Technology
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Check if user is logged in - if not, redirect to login
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "login.html";
+      }
+
+      // Star rating interaction
+      document.querySelectorAll(".star-btn").forEach((btn, index) => {
+        btn.addEventListener("click", function () {
+          document.querySelectorAll(".star-btn").forEach((b, i) => {
+            if (i <= index) {
+              b.textContent = "★";
+              b.classList.add("active");
+            } else {
+              b.textContent = "☆";
+              b.classList.remove("active");
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,963 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings - IdeaNest</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <style>
+      .settings-container {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: 100vh;
+        background-color: var(--light-gray);
+      }
+
+      .sidebar {
+        background-color: var(--white);
+        border-right: 1px solid var(--border-color);
+        padding: 1.5rem 0;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
+        overflow-y: auto;
+      }
+
+      .sidebar-header {
+        padding: 0 1.5rem 2rem;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 1rem;
+      }
+
+      .sidebar-brand {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+      }
+
+      .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.5rem;
+        color: var(--text-dark);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .sidebar-link:hover {
+        background-color: var(--light-gray);
+        color: var(--primary-blue);
+        padding-left: 2rem;
+      }
+
+      .sidebar-link.active {
+        background-color: #eff6ff;
+        color: var(--primary-blue);
+        border-left: 3px solid var(--primary-blue);
+        padding-left: 1.5rem;
+      }
+
+      .main-content {
+        margin-left: 250px;
+        padding: 2rem;
+      }
+
+      .settings-header {
+        margin-bottom: 2rem;
+      }
+
+      .settings-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+      }
+
+      .settings-subtitle {
+        color: var(--text-light);
+        font-size: 0.95rem;
+      }
+
+      .settings-tabs {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid var(--border-color);
+        overflow-x: auto;
+      }
+
+      .settings-tab {
+        padding: 1rem 1.5rem;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--text-light);
+        border-bottom: 2px solid transparent;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+      }
+
+      .settings-tab:hover {
+        color: var(--primary-blue);
+      }
+
+      .settings-tab.active {
+        color: var(--primary-blue);
+        border-bottom-color: var(--primary-blue);
+      }
+
+      .settings-card {
+        background-color: white;
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .settings-section-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .settings-section-subtitle {
+        color: var(--text-light);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-label {
+        display: block;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+      }
+
+      .form-input,
+      .form-select,
+      .form-textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        font-size: 0.95rem;
+        font-family: inherit;
+      }
+
+      .form-input:focus,
+      .form-select:focus,
+      .form-textarea:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      .form-textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      .form-hint {
+        font-size: 0.85rem;
+        color: var(--text-light);
+        margin-top: 0.35rem;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      .toggle-group {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        background-color: var(--light-gray);
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .toggle-label {
+        font-weight: 600;
+        color: var(--text-dark);
+      }
+
+      .toggle-desc {
+        font-size: 0.85rem;
+        color: var(--text-light);
+      }
+
+      .toggle-switch {
+        width: 50px;
+        height: 28px;
+        background-color: #d1d5db;
+        border-radius: 14px;
+        position: relative;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .toggle-switch.active {
+        background-color: var(--primary-blue);
+      }
+
+      .toggle-switch::after {
+        content: "";
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        background-color: white;
+        border-radius: 50%;
+        top: 2px;
+        left: 2px;
+        transition: left 0.3s ease;
+      }
+
+      .toggle-switch.active::after {
+        left: 24px;
+      }
+
+      .profile-picture-area {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .profile-picture {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 700;
+      }
+
+      .picture-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .danger-zone {
+        border: 1px solid #fca5a5;
+        background-color: #fef2f2;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .danger-title {
+        font-weight: 700;
+        color: #991b1b;
+        margin-bottom: 1rem;
+      }
+
+      .danger-description {
+        color: #7f1d1d;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .notification-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        background-color: var(--light-gray);
+        border-radius: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .notification-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .notification-title {
+        font-weight: 600;
+        color: var(--text-dark);
+        font-size: 0.95rem;
+      }
+
+      .notification-desc {
+        color: var(--text-light);
+        font-size: 0.85rem;
+      }
+
+      .privacy-option {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        background-color: var(--light-gray);
+        border-radius: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .privacy-input {
+        margin-right: 1rem;
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+
+      .privacy-label {
+        cursor: pointer;
+        flex: 1;
+      }
+
+      .privacy-title {
+        font-weight: 600;
+        color: var(--text-dark);
+      }
+
+      .privacy-desc {
+        color: var(--text-light);
+        font-size: 0.85rem;
+      }
+
+      @media (max-width: 768px) {
+        .settings-container {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          display: none;
+        }
+
+        .main-content {
+          margin-left: 0;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">🚀 IdeaNest</div>
+      </div>
+      <ul class="sidebar-menu">
+        <li>
+          <a href="founder-dashboard.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">📊</span> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-link">
+            <span style="font-size: 1.2rem">📝</span> My Ideas
+          </a>
+        </li>
+        <li>
+          <a href="chat.html" class="sidebar-link">
+            <span style="font-size: 1.2rem">💬</span> Messages
+          </a>
+        </li>
+        <li>
+          <hr
+            style="
+              border: none;
+              border-top: 1px solid var(--border-color);
+              margin: 1rem 0;
+            "
+          />
+        </li>
+        <li>
+          <a href="#" class="sidebar-link active">
+            <span style="font-size: 1.2rem">⚙️</span> Settings
+          </a>
+        </li>
+        <li>
+          <a href="#" id="logoutBtn" class="sidebar-link">
+            <span style="font-size: 1.2rem">🚪</span> Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="settings-header">
+        <h1 class="settings-title">Settings</h1>
+        <p class="settings-subtitle">
+          Manage your account, preferences, and platform settings
+        </p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="settings-tabs">
+        <button class="settings-tab active">Account</button>
+        <button class="settings-tab">Privacy & Safety</button>
+        <button class="settings-tab">Notifications</button>
+        <button class="settings-tab">Preferences</button>
+      </div>
+
+      <!-- Account Settings -->
+      <div id="account-tab">
+        <!-- Profile Information -->
+        <div class="settings-card">
+          <h3 class="settings-section-title">Profile Information</h3>
+
+          <div class="profile-picture-area">
+            <div class="profile-picture">JD</div>
+            <div class="picture-actions">
+              <button class="btn btn-primary btn-sm">Upload Photo</button>
+              <button class="btn btn-outline btn-sm">Remove</button>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name *</label>
+              <input
+                type="text"
+                class="form-input"
+                value="John"
+                placeholder="Enter your first name"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name *</label>
+              <input
+                type="text"
+                class="form-input"
+                value="Doe"
+                placeholder="Enter your last name"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email *</label>
+            <input
+              type="email"
+              class="form-input"
+              value="john.doe@gmail.com"
+              disabled
+            />
+            <p class="form-hint">
+              Your email is verified and cannot be changed
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Bio</label>
+            <textarea
+              class="form-textarea"
+              placeholder="Write a short bio about yourself"
+            >
+Passionate entrepreneur and founder with 5 years of experience in tech startups.</textarea
+            >
+            <p class="form-hint">Maximum 300 characters</p>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Location</label>
+              <input
+                type="text"
+                class="form-input"
+                value="San Francisco, CA"
+                placeholder="Your location"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Website/LinkedIn</label>
+              <input
+                type="url"
+                class="form-input"
+                value="linkedin.com/in/johndoe"
+                placeholder="https://..."
+              />
+            </div>
+          </div>
+
+          <div class="button-group">
+            <button class="btn btn-primary">Save Changes</button>
+            <button class="btn btn-outline">Cancel</button>
+          </div>
+        </div>
+
+        <!-- Role & Skills -->
+        <div class="settings-card">
+          <h3 class="settings-section-title">Role & Skills</h3>
+
+          <div class="form-group">
+            <label class="form-label">Primary Role *</label>
+            <select class="form-select">
+              <option>Founder</option>
+              <option>Investor</option>
+              <option>Advisor</option>
+            </select>
+            <p class="form-hint">Choose your primary role on the platform</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Skills & Expertise</label>
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Add a skill and press Enter"
+            />
+            <div
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                margin-top: 1rem;
+              "
+            >
+              <span
+                class="badge"
+                style="
+                  background-color: #dbeafe;
+                  color: #0c4a6e;
+                  padding: 0.4rem 0.8rem;
+                  border-radius: 0.3rem;
+                "
+                >Product Design ✕</span
+              >
+              <span
+                class="badge"
+                style="
+                  background-color: #dbeafe;
+                  color: #0c4a6e;
+                  padding: 0.4rem 0.8rem;
+                  border-radius: 0.3rem;
+                "
+                >Business Development ✕</span
+              >
+              <span
+                class="badge"
+                style="
+                  background-color: #dbeafe;
+                  color: #0c4a6e;
+                  padding: 0.4rem 0.8rem;
+                  border-radius: 0.3rem;
+                "
+                >Fundraising ✕</span
+              >
+            </div>
+          </div>
+
+          <div class="button-group">
+            <button class="btn btn-primary">Save Changes</button>
+          </div>
+        </div>
+
+        <!-- Password & Security -->
+        <div class="settings-card">
+          <h3 class="settings-section-title">Password & Security</h3>
+
+          <div class="form-group">
+            <label class="form-label">Current Password</label>
+            <input type="password" class="form-input" placeholder="••••••••" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">New Password</label>
+              <input
+                type="password"
+                class="form-input"
+                placeholder="••••••••"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Confirm New Password</label>
+              <input
+                type="password"
+                class="form-input"
+                placeholder="••••••••"
+              />
+            </div>
+          </div>
+
+          <div class="alert alert-info">
+            <span>ℹ️</span>
+            <div>
+              Use a strong password with at least 8 characters, including
+              uppercase, lowercase, numbers, and symbols.
+            </div>
+          </div>
+
+          <div class="button-group">
+            <button class="btn btn-primary">Change Password</button>
+          </div>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="danger-zone">
+          <div class="danger-title">⚠️ Danger Zone</div>
+          <div class="danger-description">
+            Deleting your account will permanently remove all your data,
+            including ideas, feedback, and conversations.
+          </div>
+          <button class="btn btn-danger">Delete Account</button>
+        </div>
+      </div>
+
+      <!-- Privacy & Safety -->
+      <div id="privacy-tab" style="display: none">
+        <div class="settings-card">
+          <h3 class="settings-section-title">Profile Visibility</h3>
+
+          <div class="privacy-option">
+            <input
+              type="radio"
+              name="profile-visibility"
+              class="privacy-input"
+              value="public"
+              checked
+            />
+            <label class="privacy-label">
+              <div class="privacy-title">Public Profile</div>
+              <div class="privacy-desc">
+                Your profile and ideas are visible to all registered users
+              </div>
+            </label>
+          </div>
+
+          <div class="privacy-option">
+            <input
+              type="radio"
+              name="profile-visibility"
+              class="privacy-input"
+              value="private"
+            />
+            <label class="privacy-label">
+              <div class="privacy-title">Private Profile</div>
+              <div class="privacy-desc">
+                Only connections can see your profile and contact you
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <h3 class="settings-section-title">Who Can Contact You?</h3>
+
+          <div class="privacy-option">
+            <input type="checkbox" class="privacy-input" checked />
+            <label class="privacy-label">
+              <div class="privacy-title">Advisors</div>
+              <div class="privacy-desc">
+                Allow advisors to send you messages and feedback
+              </div>
+            </label>
+          </div>
+
+          <div class="privacy-option">
+            <input type="checkbox" class="privacy-input" checked />
+            <label class="privacy-label">
+              <div class="privacy-title">Investors</div>
+              <div class="privacy-desc">
+                Allow investors to reach out about your startups
+              </div>
+            </label>
+          </div>
+
+          <div class="privacy-option">
+            <input type="checkbox" class="privacy-input" />
+            <label class="privacy-label">
+              <div class="privacy-title">Other Founders</div>
+              <div class="privacy-desc">
+                Allow other founders to contact you for collaboration
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <h3 class="settings-section-title">Data & Privacy</h3>
+
+          <div class="toggle-group">
+            <div>
+              <div class="toggle-label">Allow Platform Analytics</div>
+              <div class="toggle-desc">
+                Help us improve IdeaNest by sharing usage analytics
+              </div>
+            </div>
+            <div class="toggle-switch active"></div>
+          </div>
+
+          <div class="toggle-group">
+            <div>
+              <div class="toggle-label">Share Profile with Partners</div>
+              <div class="toggle-desc">
+                Allow partners to see your profile (never sold)
+              </div>
+            </div>
+            <div class="toggle-switch"></div>
+          </div>
+
+          <div class="button-group">
+            <button class="btn btn-primary">Save Privacy Settings</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications -->
+      <div id="notifications-tab" style="display: none">
+        <div class="settings-card">
+          <h3 class="settings-section-title">Email Notifications</h3>
+          <p class="settings-section-subtitle">
+            Control which emails you receive from IdeaNest
+          </p>
+
+          <div class="notification-item">
+            <div class="notification-info">
+              <div class="notification-title">New Feedback</div>
+              <div class="notification-desc">
+                When someone leaves feedback on your idea
+              </div>
+            </div>
+            <div class="toggle-switch active"></div>
+          </div>
+
+          <div class="notification-item">
+            <div class="notification-info">
+              <div class="notification-title">Investor Interest</div>
+              <div class="notification-desc">
+                When an investor views or expresses interest
+              </div>
+            </div>
+            <div class="toggle-switch active"></div>
+          </div>
+
+          <div class="notification-item">
+            <div class="notification-info">
+              <div class="notification-title">New Messages</div>
+              <div class="notification-desc">
+                When you receive a message from users
+              </div>
+            </div>
+            <div class="toggle-switch active"></div>
+          </div>
+
+          <div class="notification-item">
+            <div class="notification-info">
+              <div class="notification-title">Weekly Digest</div>
+              <div class="notification-desc">
+                Get a summary of platform activity each week
+              </div>
+            </div>
+            <div class="toggle-switch"></div>
+          </div>
+
+          <div class="notification-item">
+            <div class="notification-info">
+              <div class="notification-title">Feature Announcements</div>
+              <div class="notification-desc">
+                Learn about new features and updates
+              </div>
+            </div>
+            <div class="toggle-switch active"></div>
+          </div>
+
+          <div class="notification-item">
+            <div class="notification-info">
+              <div class="notification-title">Marketing Emails</div>
+              <div class="notification-desc">
+                Special offers and promotional content
+              </div>
+            </div>
+            <div class="toggle-switch"></div>
+          </div>
+
+          <div class="button-group">
+            <button class="btn btn-primary">Save Notification Settings</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preferences -->
+      <div id="preferences-tab" style="display: none">
+        <div class="settings-card">
+          <h3 class="settings-section-title">Display Preferences</h3>
+
+          <div class="form-group">
+            <label class="form-label">Theme</label>
+            <select class="form-select">
+              <option>Light (Default)</option>
+              <option>Dark</option>
+              <option>System</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Language</label>
+            <select class="form-select">
+              <option>English</option>
+              <option>Spanish</option>
+              <option>French</option>
+              <option>German</option>
+              <option>Chinese</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Timezone</label>
+            <select class="form-select">
+              <option>UTC-8 (Pacific Time)</option>
+              <option>UTC-5 (Eastern Time)</option>
+              <option>UTC (GMT)</option>
+              <option>UTC+1 (Central European Time)</option>
+              <option>UTC+5:30 (India Time)</option>
+            </select>
+          </div>
+
+          <div class="button-group">
+            <button class="btn btn-primary">Save Preferences</button>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <h3 class="settings-section-title">Content Preferences</h3>
+
+          <div class="toggle-group">
+            <div>
+              <div class="toggle-label">Show Trending Ideas</div>
+              <div class="toggle-desc">
+                Display trending ideas on your dashboard
+              </div>
+            </div>
+            <div class="toggle-switch active"></div>
+          </div>
+
+          <div class="toggle-group">
+            <div>
+              <div class="toggle-label">Show Recommendations</div>
+              <div class="toggle-desc">
+                Get personalized startup and investor recommendations
+              </div>
+            </div>
+            <div class="toggle-switch active"></div>
+          </div>
+
+          <div class="button-group">
+            <button class="btn btn-primary">Save Content Preferences</button>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <h3 class="settings-section-title">API Access</h3>
+          <p class="settings-section-subtitle">
+            For integrations with third-party tools
+          </p>
+
+          <div class="form-group">
+            <label class="form-label">API Key</label>
+            <div style="display: flex; gap: 0.5rem">
+              <input
+                type="text"
+                class="form-input"
+                value="sk_live_51234567890abcdefg..."
+                disabled
+              />
+              <button class="btn btn-outline btn-sm">Copy</button>
+            </div>
+          </div>
+
+          <button class="btn btn-outline">Generate New API Key</button>
+        </div>
+      </div>
+
+      <!-- Info Alert -->
+      <div class="alert alert-info">
+        <span>ℹ️</span>
+        <div>
+          <strong>Account Changes:</strong> Most settings take effect
+          immediately. If you need help, check our
+          <a
+            href="#"
+            style="
+              color: var(--primary-blue);
+              text-decoration: none;
+              font-weight: 600;
+            "
+            >FAQ & Help Center</a
+          >.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Check if user is logged in - if not, redirect to login
+      if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "login.html";
+      }
+
+      // Tab switching
+      const tabs = document.querySelectorAll(".settings-tab");
+      const tabContents = document.querySelectorAll('[id$="-tab"]');
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          // Remove active from all
+          tabs.forEach((t) => t.classList.remove("active"));
+          tabContents.forEach((c) => (c.style.display = "none"));
+
+          // Add active to clicked
+          tab.classList.add("active");
+          const tabId =
+            ["account", "privacy", "notifications", "preferences"][
+              Array.from(tabs).indexOf(tab)
+            ] + "-tab";
+          document.getElementById(tabId).style.display = "block";
+        });
+      });
+
+      // Toggle switches
+      document.querySelectorAll(".toggle-switch").forEach((toggle) => {
+        toggle.addEventListener("click", () => {
+          toggle.classList.toggle("active");
+        });
+      });
+
+      // Handle logout
+      const logoutBtn = document.getElementById("logoutBtn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+          localStorage.clear();
+          window.location.href = "../index.html";
+        });
+      }
+    </script>
+  </body>
+</html>

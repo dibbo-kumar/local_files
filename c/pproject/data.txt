@@ -1,0 +1,13 @@
+Team1
+5
+luka 10 FWD 5 0 90
+sena 7 MID 3 1 85
+liton 5 DEF 0 2 90
+sumon 21 gk 0 5 65
+messi 10 cf 5 2 88
+Team2
+4
+shanto 9 MID 1 1 80
+ovi 3 DEF 2 1 70
+dibbo 10 CF 0 2 55
+ozil 20 ss 3 0 63

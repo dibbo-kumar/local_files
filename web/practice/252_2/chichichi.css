@@ -1,0 +1,187 @@
+.body{
+    display: flex;
+    flex-direction: column;
+}
+.upper{
+    background-color: gray;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.middle{
+    display: flex;
+    flex-direction: row;
+}
+
+.left{
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    height: 600px;
+    background: linear-gradient(to bottom, rgb(41, 222, 207),rgb(116, 192, 170));
+    color: black;
+    padding: 15px 5px 15px 15px;
+    gap: 15px;
+}
+
+.leftheader{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.semester{
+    padding: 10px;
+    background-color: rgb(201, 193, 193);
+    color: black;
+    gap: 20px;
+    border-radius: 5px;
+}
+.important{
+    height: 120px;
+    background-color: white;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 5px;
+}
+.importantheader{
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(75, 75, 148);
+    padding-bottom: 5px;
+}
+
+.importanttext{
+    font-size: 18px;
+    padding-bottom: 8px;
+}
+.viewdetails{
+    padding: 12px;
+    background: linear-gradient(to right, rgb(123, 123, 181),rgb(163, 153, 81));
+    width: 80px;
+    border-radius: 6px;
+    height: 15px;
+    /* text-decoration: none; */
+}
+
+.detailsbutton{
+    color: white;
+    text-decoration: none;
+}
+.right{
+    display: flex;
+    /* flex-grow: 1; */
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 10px 10px 10px 0px;
+    background-color: rgb(133, 124, 113);
+    gap: 30px;
+}
+.up{
+    padding: 7px;
+    background-color: white;
+    padding-bottom: 5px;
+    border-radius: 8px;
+}
+.regheader{
+    font-size: 20px;
+    font-weight: bold;
+    color: blue;
+    padding-bottom: 10px ;
+}
+
+.table{
+    border-collapse: collapse;
+    width: 100%;
+    background: linear-gradient(to right, rgb(192, 106, 106),rgb(184, 157, 157));
+}
+.table th,
+.table td{
+    border: 1px solid red;
+}
+.table th{
+    text-align: left;
+}
+
+
+
+
+
+
+
+.down{
+    display: flex;
+    flex-direction: column;
+    /* padding: 20px; */
+    height: 450px;
+    background-color: white;
+    border-radius: 8px;
+    color: blue;
+    gap: 10px;
+    padding-left: 10px;
+}
+.signform{
+    font-size: 30px;
+    /* padding: 7px; */
+    padding-bottom: 12px;
+}
+.name{
+    color: rgb(46, 62, 96);
+    /* padding: 12px; */
+    /* padding-left: 12px; */
+    font-weight: bold;
+}
+.field{
+    /* padding: 12px; */
+    /* padding-bottom: 20px;
+    padding-top: 6px; */
+    /* border: 2px solid black; */
+    /* width: 20px; */
+}
+.field input{
+    /* display: flex; */
+    /* padding-left: 80px; */
+    width: 1500px;
+    height: 20px;
+    /* flex: 1; */
+}
+.regbutton{
+    padding: 20px;
+    background: linear-gradient(to right, rgb(123, 123, 181),rgb(163, 153, 81));
+    width: 50px;
+    padding-left: 20px;
+    border-left: 20px;
+    color: white;
+    border-radius: 8px;
+}
+.butt{
+    color: white;
+    text-decoration: none;
+    /* padding-left: 20px; */
+}
+
+.lower{
+    padding: 20px;
+    background: linear-gradient(to right , red,green );
+    text-align: center;
+    color: white;
+    font-size: 20px;
+}
+.dashboard{
+    padding-right: 15px;
+    text-decoration: none;
+    font-weight: bold ;
+}
+
+/* table , td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    color: black;
+}
+
+th{
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    color: rgb(255, 255, 255);
+} */

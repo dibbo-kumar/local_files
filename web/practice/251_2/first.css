@@ -1,0 +1,145 @@
+.body{
+    display: flex;
+    flex-direction: column;
+}
+.up{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid black;
+}
+.title{
+    font-weight: bold;
+    font-size: 20px;
+}
+.buttons{
+    /* padding: 10px; */
+
+}
+.nonclicked{
+    padding: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+.clicked{
+    padding: 10px;
+    background-color: #0976a7;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.down{
+    display: flex;
+    flex-direction: row;
+
+}
+.left{
+    width: 43%;
+    background-color:#0976a7 ;
+    text-align: center;
+    align-items: center;
+}
+.paragraph{
+    align-items: center;
+    text-align: left;
+    padding: 30px;
+    padding-top: 150px;
+    font-size: 30px;
+    color: white;
+}
+.name{
+    font-size: 30px;
+    padding-left: 100px;
+    text-align: left;
+}
+.assistant{
+    padding-left: 100px;
+    font-size: 20px;
+    text-align: left;
+    padding-bottom: 80px;
+}
+.right{
+    background-color: #d5dcdf;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    padding-left: 50px;
+    padding-right: 50px;
+    /* border: 1px solid red; */
+    gap: 15px;
+}
+.title{
+    font-size: 30px;
+}
+.create{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    font-size: 20px;
+}
+.createone{
+    color: red;
+}
+.signgoogle{
+    padding: 15px 120px 15px 120px;
+    border: 2px solid black;
+    /* width: 100px; */
+}
+.applefacebook{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
+.apple{
+    padding: 10px;
+    border: 2px solid black;
+}
+.facebook{
+    padding: 10px;
+    border: 2px solid black;
+}
+.field input{
+    border: 1px solid black;
+    padding: 10px;
+    width: 350px;
+}
+.forgot{
+    color: rgb(129, 19, 19);
+    text-align: left;
+    /* text-decoration: none; */
+    padding-left: 220px;
+    /* display: flex; */
+    /* justify-content: flex-end; */
+}
+.signin{
+    border: 1px solid black;
+    background-color: red;
+    width: 360px;
+    height: 30px;
+    text-align: center;
+    font-size:25px;
+    color: white;
+}
+.faq{
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    font-size: 20px;
+}
+.faqs{
+    color: red;
+    padding-left: 10px;
+}
+.visit{
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    font-size: 20px;
+}
+.visits{
+    padding-left: 10px;
+    color: red;
+}

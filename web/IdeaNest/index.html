@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IdeaNest - Landing Page</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+    <style>
+      .landing-hero {
+        background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+        color: white;
+        padding: 6rem 2rem;
+        text-align: center;
+      }
+
+      .landing-hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: white;
+      }
+
+      .landing-hero p {
+        font-size: 1.25rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        padding: 4rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .feature-card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .feature-card h3 {
+        margin-bottom: 0.75rem;
+      }
+
+      .feature-card p {
+        color: #6b7280;
+        font-size: 0.95rem;
+      }
+
+      .how-it-works {
+        background-color: #f9fafb;
+        padding: 4rem 2rem;
+      }
+
+      .how-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 2rem auto 0;
+      }
+
+      .step {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        text-align: center;
+        position: relative;
+      }
+
+      .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        background-color: #3b82f6;
+        color: white;
+        border-radius: 50%;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .cta-section {
+        background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+        color: white;
+        padding: 4rem 2rem;
+        text-align: center;
+      }
+
+      .cta-section h2 {
+        color: white;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer {
+        background-color: #111827;
+        color: #d1d5db;
+        padding: 2rem;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="navbar">
+      <div class="nav-container">
+        <a href="#" class="nav-brand">🚀 IdeaNest</a>
+        <ul class="nav-menu">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="#cta">Get Started</a></li>
+        </ul>
+        <div class="nav-right">
+          <a href="pages/login.html" class="btn btn-outline btn-sm">Login</a>
+          <a href="pages/signup.html" class="btn btn-primary btn-sm">Sign Up</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="landing-hero">
+      <div class="container">
+        <h1>Turn Your Ideas Into Reality</h1>
+        <p>
+          Connect with advisors for feedback, find investors for funding, or
+          invest in the next big startup
+        </p>
+        <div class="hero-buttons">
+          <a href="pages/signup.html" class="btn btn-primary"
+            >Get Started Free</a
+          >
+          <a
+            href="#features"
+            class="btn btn-secondary"
+            style="color: white; border-color: white"
+            >Learn More</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="features">
+      <div class="feature-card">
+        <div class="feature-icon">💡</div>
+        <h3>For Founders</h3>
+        <p>
+          Share your ideas for feedback or seek funding from investors. Get
+          detailed advice from experienced advisors.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>For Advisors</h3>
+        <p>
+          Review startup ideas, provide expert feedback, and help shape the next
+          generation of entrepreneurs.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3>For Investors</h3>
+        <p>
+          Discover promising startups, connect directly with founders, and build
+          your investment portfolio.
+        </p>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how" class="how-it-works">
+      <div class="container">
+        <h2 style="text-align: center; margin-bottom: 1rem">
+          How IdeaNest Works
+        </h2>
+        <p style="text-align: center; color: #6b7280; margin-bottom: 2rem">
+          Simple steps to get started
+        </p>
+        <div class="how-steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h4>Sign Up</h4>
+            <p style="color: #6b7280; font-size: 0.9rem">
+              Create your account with email verification
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h4>Complete Profile</h4>
+            <p style="color: #6b7280; font-size: 0.9rem">
+              Select your role and add your details
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h4>Connect & Grow</h4>
+            <p style="color: #6b7280; font-size: 0.9rem">
+              Find the right opportunities and collaborators
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="cta-section">
+      <div class="container">
+        <h2>Ready to Join the Community?</h2>
+        <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem">
+          Start turning your ideas into impact today
+        </p>
+        <a href="pages/signup.html" class="btn btn-primary"
+          >Create Your Account</a
+        >
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        &copy; 2024 IdeaNest. All rights reserved. | Privacy Policy | Terms of
+        Service
+      </p>
+    </div>
+
+    <script>
+      // Check if user is already logged in - redirect to dashboard
+      if (localStorage.getItem("isLoggedIn") === "true") {
+        const userRole = localStorage.getItem("userRole");
+        if (userRole === "founder") {
+          window.location.href = "pages/founder-dashboard.html";
+        } else if (userRole === "advisor") {
+          window.location.href = "pages/advisor-dashboard.html";
+        } else if (userRole === "investor") {
+          window.location.href = "pages/investor-dashboard.html";
+        } else {
+          window.location.href = "pages/founder-dashboard.html?limited=true";
+        }
+      }
+    </script>
+  </body>
+</html>
